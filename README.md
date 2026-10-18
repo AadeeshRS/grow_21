@@ -6,7 +6,7 @@
 > - It is **NOT** a clinical, cognitive, or developmental validation on children with Trisomy 21 (Down syndrome).  
 > - **NO real-world child interaction data, clinical trial observations, or human user studies were collected or used.**  
 > - Passing unit and regression tests confirms **deterministic software invariants**, NOT clinical suitability or real-world educational efficacy.  
-> - This module is a standalone Python package and is **strictly not integrated into any user-facing frontend or application** at this stage.
+> - The package now includes a thin live learner service (`service/`) used by the React Native game module for synthetic integration testing. See [`docs/integration/FRONTEND_BACKEND_API.md`](docs/integration/FRONTEND_BACKEND_API.md). This integration has not been validated with real children.
 
 ---
 
@@ -69,10 +69,10 @@ pip install -e .
 
 ### 4.2 Run All Automated Tests
 ```bash
-# Clean-checkout self-contained test suite (73 tests across 11 modules)
+# Clean-checkout self-contained test suite (111 tests across 12 modules)
 python -m pytest -v tests
 ```
-*Current Result:* **73 passed, 1 skipped in ~10s** on clean checkout (or **74 passed in ~34s** when full experimental artifacts are present) on Python 3.12 / 3.13 and pytest 9.1.
+*Current Result:* **110 passed, 1 skipped in ~6s** on clean checkout (Linux, Python 3.13.14, October 18, 2026). Before the live service was added the suite was 73 passed, 1 skipped; the skipped test requires the full experimental artifacts.
 
 > [!NOTE]
 > **Artifact Availability & Evidence Archives**: All four historical evidence ZIP archives (`evidence/phase_N/*.zip`) and large multi-hundred-megabyte raw event interaction logs are excluded from public Git tracking via `.gitignore`. The core test suite runs 100% self-contained using deterministic test fixtures in `tests/fixtures/`. Full raw interaction logs can be regenerated at any time using the simulation scripts in Sections 4.3–4.5.
@@ -107,6 +107,12 @@ python -m grow21_simulation_benchmark.run_closed_loop \
 ```bash
 python -m grow21_simulation_benchmark.run_phase_5_experiments --help
 ```
+
+### 4.6 Run the Live Learner Service (Frontend Integration)
+```bash
+python -m uvicorn grow21_simulation_benchmark.service.app:create_app --factory --host 0.0.0.0 --port 8000
+```
+The API, configuration, frontend setup, and limitations are documented in [`docs/integration/FRONTEND_BACKEND_API.md`](docs/integration/FRONTEND_BACKEND_API.md).
 
 ---
 
@@ -143,7 +149,7 @@ python -m grow21_simulation_benchmark.run_phase_5_experiments --help
 
 ## 6. Frontend Integration Status
 
-- **Status:** **NOT COMPLETE / PREPARATION STAGE ONLY**.
-- The minigames and user interface belong to a teammate and are developed in a separate repository.
-- No frontend code, web server, or production database has been implemented here.
-- See [`docs/integration/FRONTEND_INTEGRATION_PREPARATION.md`](docs/integration/FRONTEND_INTEGRATION_PREPARATION.md) for provisional data structures, architectural boundaries, and open schema questions.
+- **Status:** Integrated for development and synthetic testing on branches `grow21-integration` (this backend) and `grow21-integration-ui` (React Native module, from `ui-game`).
+- The selected `RobustAdaptiveFilterController` owns mastery estimation and difficulty. The frontend renders tasks, records attempts, and maps the recommended `D` to game parameters.
+- Verified with backend API tests, frontend unit/UI tests, a live frontend-against-backend test suite, and a manual Expo web run. **Not yet run on an Android/iOS device or emulator.** All nine games still use a generic placeholder renderer.
+- Full details: [`docs/integration/FRONTEND_BACKEND_API.md`](docs/integration/FRONTEND_BACKEND_API.md).

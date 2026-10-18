@@ -2,7 +2,7 @@
 
 **Audited Status:** Fully Restructured, Validated, and Documented  
 **Import Package Namespace:** `grow21_simulation_benchmark` (under `src/grow21_simulation_benchmark/`)  
-**Test Suite Status:** 67 tests across 10 modules (66 passing self-contained tests on clean checkout, 1 full-artifact test)  
+**Test Suite Status:** 111 tests across 12 modules (110 passing self-contained tests on clean checkout, 1 full-artifact test)  
 
 This document provides the authoritative layout of source code, configuration files, automated test suites, human-facing research documentation, immutable evidence packages, canonical experiment outputs, and archived historical material.
 
@@ -26,6 +26,7 @@ grow21_simulation/
 │   ├── reliability.py                      # Sensor uncertainty engine (Grow21 product rule) and observation distortion
 │   ├── initializers.py                     # SkillPriorEstimate, MasteryPriorInitializer, and synthetic parent-proxy
 │   ├── closed_loop.py                      # Controller policies, 8 belief-state estimators, semantic safeguard
+│   ├── service/                            # Live learner service: runtime.py (state owner), schemas.py, app.py (FastAPI)
 │   ├── features.py                         # Causal feature extraction for linear baseline (strictly pre-outcome)
 │   ├── dataset.py                          # Sequence generation and learner-disjoint splitting
 │   ├── generate_data.py                    # Benchmark dataset generation CLI
@@ -44,7 +45,7 @@ grow21_simulation/
 │       ├── dkt.py                          # Vanilla recurrent Deep Knowledge Tracing (GRU)
 │       └── reliability_gated_dkt.py        # Grow21 Reliability-Gated DKT (sensor-gated GRU)
 │
-├── tests/                                  # Complete pytest test suite (67 tests across 10 modules)
+├── tests/                                  # Complete pytest test suite (111 tests across 12 modules)
 │   ├── __init__.py                         # Test package marker
 │   ├── fixtures/                           # Deterministic test fixtures for clean checkout
 │   │   └── phase_4_event_metrics_fixture.csv # 27,000-event slice for offline belief estimation tests (5.36 MB)

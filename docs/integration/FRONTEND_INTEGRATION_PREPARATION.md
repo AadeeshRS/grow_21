@@ -2,7 +2,7 @@
 
 **Document Type:** Provisional Architectural Note  
 **Audience:** Grow21 Simulation Developers, Frontend Engineers, and Game Integration Teammates  
-**Status:** **Provisional & Non-Binding** (No assumed final REST/WebSocket API or production database schema)  
+**Status:** **Superseded by the implemented integration**: see [`FRONTEND_BACKEND_API.md`](FRONTEND_BACKEND_API.md). This note is kept as the historical pre-integration boundary analysis.  
 
 ---
 

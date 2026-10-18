@@ -81,7 +81,7 @@ The Grow21 simulation benchmark comprises five tightly decoupled sub-systems ope
 
 ### 2.1 Virtual Learner Simulator (`src/grow21_simulation_benchmark/simulator.py`)
 Implements the generative latent-state ground truth for simulated children:
-- **Latent Mastery Vector $\boldsymbol{\theta} \in [0.05, 0.95]^K$**: Each learner maintains latent ability across $K=6$ cognitive skills (`phoneme_identification`, `auditory_discrimination`, `visual_discrimination`, `pattern_matching`, `number_sense`, `motor_coordination`).
+- **Latent Mastery Vector $\boldsymbol{\theta} \in [0.05, 0.95]^K$**: Each learner maintains latent ability across $K=6$ configured skills (`fine_motor`, `visual_discrimination`, `phonological_awareness`, `working_memory`, `categorization`, `sequential_reasoning`; see `configs/default.yaml`).
 - **Diminishing-Returns Practice Increment**:
   $$\Delta \theta_{\text{primary}} = \eta_k \cdot (0.95 - \theta_{\text{primary}}) \cdot \Phi_{\text{feedback}} \cdot \Psi_{\text{difficulty}} + \epsilon_{\text{process}}$$
   where feedback factor $\Phi_{\text{feedback}} = 0.70$ on clean success ($y_{\text{clean}}=1$) and $0.30$ on clean failure ($y_{\text{clean}}=0$); difficulty factor $\Psi = 0.60 + 0.40 D_t$.

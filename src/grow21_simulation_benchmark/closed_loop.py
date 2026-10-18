@@ -598,7 +598,6 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
 
     def select_next_task(self, step_idx: int) -> Tuple[str, float, float]:
         game_id = self.games[step_idx % len(self.games)]
-        game = self.registry.games[game_id]
 
         # 1. Project session gap and projected trial counter
         if self.session_trial_count >= self.max_session_trials:
@@ -610,13 +609,38 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
             projected_counter = self.session_trial_count + 1
 
         # 2. Safety intervention check
-        safety_triggered = False
+        safety_triggered, time_gap, projected_counter = self._consume_safety_trigger(time_gap, projected_counter)
+
+        diff = self._recommend_difficulty(game_id, time_gap, projected_counter, safety_triggered)
+        return game_id, diff, time_gap
+
+    def select_difficulty_for_elapsed_time(self, game_id: str, elapsed_hours: float) -> float:
+        """Live counterpart of select_next_task for a caller-chosen game and real elapsed time.
+
+        select_next_task plans simulated inter-trial gaps itself; a live runtime instead observes
+        wall-clock time. The caller is responsible for ending a session once
+        session_trial_count reaches max_session_trials and for enforcing the cooldown pause
+        before calling this method after a frustration trigger. Forgetting, safety drop,
+        bisection, deadband and step limits are the same code path as select_next_task.
+        """
+        safety_triggered, time_gap, projected_counter = self._consume_safety_trigger(
+            max(0.0, float(elapsed_hours)), self.session_trial_count + 1
+        )
+        return self._recommend_difficulty(game_id, time_gap, projected_counter, safety_triggered)
+
+    def _consume_safety_trigger(self, time_gap: float, projected_counter: int) -> Tuple[bool, float, int]:
         if self.consecutive_failures >= self.max_consecutive_failures:
-            safety_triggered = True
             self.consecutive_failures = 0
             time_gap = max(time_gap, self.cooldown_gap_hours)
             if time_gap > 2.0:
                 projected_counter = 1
+            return True, time_gap, projected_counter
+        return False, time_gap, projected_counter
+
+    def _recommend_difficulty(
+        self, game_id: str, time_gap: float, projected_counter: int, safety_triggered: bool
+    ) -> float:
+        game = self.registry.games[game_id]
 
         # 3. Apply expected forgetting decay to beliefs once per trial based on planned time gap
         if time_gap > 0.0:
@@ -684,7 +708,7 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
                 "target_error": round(abs(pred_p - self.target_prob), 4),
                 "determination_rule": "safety_cooldown",
             }
-            return game_id, diff, time_gap
+            return diff
 
         # 6. Deadband check: hold steady if predicted success at current difficulty is within deadband
         curr_pred_p = self.predict_clean_success_prob(game_id, self.current_difficulty, projected_counter)
@@ -733,7 +757,7 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
             "target_error": round(abs(final_pred_p - self.target_prob), 4),
             "determination_rule": rule,
         }
-        return game_id, diff, time_gap
+        return diff
 
     def observe_outcome(
         self,

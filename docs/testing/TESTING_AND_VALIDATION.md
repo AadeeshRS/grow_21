@@ -2,7 +2,7 @@
 
 **Date:** October 18, 2026  
 **Audited Status:** Complete, Verified, and Deterministic  
-**Full Suite Result:** **73 passed in ~10s** across 11 test modules  
+**Full Suite Result:** **110 passed, 1 skipped** on clean checkout across 12 test modules (October 18, 2026, after adding the live learner service; previously 73 passed, 1 skipped)  
 **Validated Environment:** Python 3.12 / 3.13, pytest 9.1.1, pluggy 1.6/1.7, Windows 11 (win32)  
 
 ---
@@ -145,6 +145,7 @@ python -m pytest -v -m "not full_artifacts"
 | [`tests/test_belief_state_estimation.py`](../../tests/test_belief_state_estimation.py) | 14 | Phase 4 state estimation: time alignment separating pre-outcome belief estimation from post-outcome belief updating, secondary transfer tracking on unpracticed skills, strict no-leakage of hidden ground truth, observation likelihood normalization, paired seed-aware cluster bootstrap invariants, split separation across cohorts, self-contained deterministic fixture recomputation, and full-artifact volume verification. |
 | [`tests/test_phase_5_state_estimation.py`](../../tests/test_phase_5_state_estimation.py) | 11 | Phase 5 state estimation: expected transitions increase on both success and failure, analytical formula verification, secondary transfer ceiling ($0.95$), single forgetting per event, mastery prior defaults/fallbacks, synthetic parent-proxy no-leakage, **critical semantic safeguard** (prohibits routing $P(y_{\text{obs}})$ into clean-success controller), open-loop replay consistency, and offline model selector reproducibility (individual vs all). |
 | [`tests/test_estimator_robustness.py`](../../tests/test_estimator_robustness.py) | 7 | Phase 5.2 estimator robustness: bilateral transition symmetry (no ratcheting drift on failure), session gap uncertainty diffusion, reliability-weighted residual innovation gating, secondary transfer modulation, strict zero data leakage, and deterministic reproducibility. |
+| [`tests/test_service_api.py`](../../tests/test_service_api.py) | 37 | Live learner service: API schemas and structured errors, the nine game-to-skill mappings, rejected events leaving state byte-identical, eventId/taskId idempotency, shared-skill evidence across games, secondary transfer, reliability convention, non-observation outcomes, first-attempt observation rule, real-time forgetting, live/simulator selection parity, frustration cooldown and recovery, session limit and restoration, learner isolation, persistence, and determinism. |
 | [`tests/test_documentation_integrity.py`](../../tests/test_documentation_integrity.py) | 4 | Documentation integrity: absence of non-printing ASCII control characters in text files, absence of literal tabs in Markdown, preservation of required LaTeX expressions and code identifiers, and absence of fractured multi-line LaTeX splits. |
 
 
