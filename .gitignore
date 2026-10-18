@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Production build artifacts
+dist/
+*/dist/
+build/
+*/build/
+
+# Expo / Metro
+.expo/
+*/.expo/
+.expo-shared/
+*/.expo-shared/
+
+# Environment / Secrets
+.env
+.env*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System Files
+.DS_Store
+Thumbs.db

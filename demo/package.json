@@ -1,0 +1,14 @@
+{
+  "name": "grow21-game-demo",
+  "private": true,
+  "version": "0.1.0",
+  "main": "expo/AppEntry",
+  "scripts": { "start": "expo start", "android": "expo start --android" },
+  "dependencies": {
+    "expo": "~52.0.0",
+    "expo-asset": "~11.0.1",
+    "react": "18.3.1",
+    "react-native": "0.76.1"
+  },
+  "devDependencies": { "typescript": "^5.3.3", "@types/react": "~18.3.12" }
+}
