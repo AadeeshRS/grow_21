@@ -1,5 +1,6 @@
 import {clamp,lerp,roundLerp} from './config'; import type {GameConfig,GameId,SkillId} from './types';
-export const SKILLS:Record<GameId,SkillId>={trace:'fine_motor_tracing',bubble:'motor_targeting',block:'drag_precision',echo:'vocal_activation',sentence:'sentence_sequencing',audio:'receptive_language',sort:'classification',flip:'visual_working_memory',pattern:'visual_sequencing'};
+/** Primary skill of each game as configured in the backend (configs/default.yaml). */
+export const SKILLS:Record<GameId,SkillId>={trace:'fine_motor',bubble:'fine_motor',block:'fine_motor',echo:'phonological_awareness',sentence:'sequential_reasoning',audio:'working_memory',sort:'categorization',flip:'working_memory',pattern:'sequential_reasoning'};
 export const GAME_NAMES:Record<GameId,string>={trace:'Trace & Glow',bubble:'Bubble Pop Brigade',block:'Block Stacker',echo:'Echo Safari',sentence:'Picture-Sentence Strips',audio:'Audio Search',sort:'Category Sorting',flip:'Visual Flip Match',pattern:'Pattern Train'};
 export function difficultyConfig(game:GameId,D:number):GameConfig { const d=clamp(D); switch(game){
 case 'trace': return {pathWidthDp:lerp(120,44,d),pathLengthDp:lerp(220,620,d),curvature:lerp(0,.8,d),turnCount:roundLerp(0,6,d),shapeType:d<.2?'straight':d<.5?'gentleCurve':d<.8?'zigzag':'shapes'};

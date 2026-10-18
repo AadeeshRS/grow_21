@@ -3,12 +3,45 @@
   "private": true,
   "version": "0.1.0",
   "main": "expo/AppEntry",
-  "scripts": { "start": "expo start", "android": "expo start --android" },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit -p tsconfig.typecheck.json",
+    "test": "jest",
+    "test:integration": "jest --runInBand --testPathIgnorePatterns /node_modules/ --roots '<rootDir>/../tests/integration'"
+  },
   "dependencies": {
+    "@expo/metro-runtime": "~4.0.1",
     "expo": "~52.0.0",
     "expo-asset": "~11.0.1",
     "react": "18.3.1",
-    "react-native": "0.76.1"
+    "react-dom": "18.3.1",
+    "react-native": "0.76.1",
+    "react-native-web": "~0.19.13"
   },
-  "devDependencies": { "typescript": "^5.3.3", "@types/react": "~18.3.12" }
+  "devDependencies": {
+    "@testing-library/react-native": "^12.9.0",
+    "@types/jest": "^29.5.14",
+    "@types/react": "~18.3.12",
+    "jest": "~29.7.0",
+    "jest-expo": "~52.0.6",
+    "react-test-renderer": "^18.3.1",
+    "typescript": "^5.3.3"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "roots": [
+      "<rootDir>/../src",
+      "<rootDir>/../tests"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>/node_modules"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/integration/"
+    ]
+  }
 }

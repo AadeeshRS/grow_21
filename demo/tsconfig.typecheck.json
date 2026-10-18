@@ -1,0 +1,16 @@
+{
+  "//": "Typechecks the module in ../src and ../tests against this host's node_modules. Kept separate from tsconfig.json because Metro and jest-expo apply tsconfig paths at runtime.",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node", "jest"],
+    "paths": {
+      "react": ["./node_modules/@types/react"],
+      "react/*": ["./node_modules/@types/react/*"],
+      "react-native": ["./node_modules/react-native"],
+      "@testing-library/react-native": ["./node_modules/@testing-library/react-native"]
+    }
+  },
+  "include": ["App.tsx", "../src", "../tests"]
+}
