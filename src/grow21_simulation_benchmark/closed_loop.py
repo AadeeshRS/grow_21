@@ -470,6 +470,22 @@ def _project_distribution_onto_grid(
     return new_weights
 
 
+def _diffuse_1d_grid(
+    weights: np.ndarray,
+    grid: np.ndarray,
+    sigma: float,
+) -> np.ndarray:
+    """Applies a continuous Gaussian convolution kernel across fixed 1D grid points to model diffusion / process noise."""
+    if sigma <= 1e-5:
+        return weights
+    diff = grid[:, None] - grid[None, :]
+    kernel = np.exp(-(diff ** 2) / (2.0 * (sigma ** 2)))
+    kernel /= kernel.sum(axis=0, keepdims=True)
+    new_w = kernel @ weights
+    s = float(np.sum(new_w))
+    return new_w / s if s > 0 else weights
+
+
 class ModelAlignedTargetAdaptiveController(ControllerPolicy):
     """Phase 3/4/5 Model-Aligned Target-Adaptive Controller.
 
@@ -542,7 +558,7 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
             }
         self._last_predicted_clean_prob: float = 0.75
 
-        if self.belief_update_mode in ("approx_bayesian_filter", "approx_bayesian_filter_transfer"):
+        if self.belief_update_mode in ("approx_bayesian_filter", "approx_bayesian_filter_transfer", "robust_adaptive_filter"):
             self._bayesian_filter_state: Dict[str, Dict[str, np.ndarray]] = {}
             for s in task_registry.skill_ids:
                 grid = np.linspace(0.05, 0.95, 41)
@@ -551,6 +567,13 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
                 w_sum = float(np.sum(weights))
                 weights = weights / w_sum if w_sum > 0 else np.ones_like(grid) / len(grid)
                 self._bayesian_filter_state[s] = {"grid": grid, "weights": weights}
+
+        if self.belief_update_mode == "robust_adaptive_filter":
+            self.heuristic_mastery: Dict[str, float] = copy.deepcopy(self.estimated_mastery)
+            self.rel_residual_ema: float = 0.0
+            self.base_process_noise: float = 0.012
+            self.gap_diffusion_rate: float = 0.020
+            self.fallback_threshold: float = -0.07
 
     def get_effective_mastery(self, game_id: str) -> float:
         """Computes estimated effective mastery blending primary and secondary skills."""
@@ -602,11 +625,21 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
                     -self.forgetting_rate_prior * time_gap
                 )
                 self.estimated_mastery[s] = float(np.clip(decayed, 0.05, 0.95))
+
+                if hasattr(self, "heuristic_mastery") and s in self.heuristic_mastery:
+                    h_decay = 0.05 + (self.heuristic_mastery[s] - 0.05) * math.exp(
+                        -self.forgetting_rate_prior * time_gap
+                    )
+                    self.heuristic_mastery[s] = float(np.clip(h_decay, 0.05, 0.95))
+
                 if hasattr(self, "_bayesian_filter_state") and s in getattr(self, "_bayesian_filter_state", {}):
                     grid = self._bayesian_filter_state[s]["grid"]
                     weights = self._bayesian_filter_state[s]["weights"]
                     decayed_pts = 0.05 + (grid - 0.05) * math.exp(-self.forgetting_rate_prior * time_gap)
                     new_w = _project_distribution_onto_grid(decayed_pts, weights, grid)
+                    if self.belief_update_mode == "robust_adaptive_filter":
+                        gap_sigma = min(0.06, getattr(self, "gap_diffusion_rate", 0.020) * math.sqrt(time_gap))
+                        new_w = _diffuse_1d_grid(new_w, grid, gap_sigma)
                     self._bayesian_filter_state[s]["weights"] = new_w
                     self.estimated_mastery[s] = float(np.clip(np.sum(new_w * grid), 0.05, 0.95))
 
@@ -777,6 +810,104 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
             self._bayesian_filter_state[prim_skill]["weights"] = w_next
             self.estimated_mastery[prim_skill] = float(np.clip(np.sum(w_next * grid), 0.05, 0.95))
 
+        elif self.belief_update_mode == "robust_adaptive_filter":
+            # Robust Adaptive Filter:
+            # 1. Update shadow baseline for tracking conservative bounds
+            curr_h = self.heuristic_mastery[prim_skill]
+            if outcome == 1:
+                new_h = curr_h + self.learning_rate_prior * (0.95 - curr_h)
+            else:
+                new_h = curr_h - self.learning_rate_prior * (curr_h - 0.05)
+            self.heuristic_mastery[prim_skill] = float(np.clip(new_h, 0.05, 0.95))
+
+            # 2. Observable reliability-weighted innovation tracking
+            rho = 1.0 if estimated_reliability is None else float(np.clip(estimated_reliability, 0.0, 1.0))
+            p_clean_pred = float(np.clip(self._last_predicted_clean_prob, 0.01, 0.99))
+            pred_obs = p_clean_pred * (rho + 0.15 * (1.0 - rho)) + (1.0 - p_clean_pred) * (0.04 * (1.0 - rho))
+            residual = float(outcome - pred_obs)
+            self.rel_residual_ema = 0.85 * self.rel_residual_ema + 0.15 * (rho * residual)
+
+            # 3. Bilateral Bayesian belief update
+            grid = self._bayesian_filter_state[prim_skill]["grid"]
+            w = self._bayesian_filter_state[prim_skill]["weights"]
+
+            if outcome == 1:
+                p_obs_given_clean1 = rho + 0.15 * (1.0 - rho)
+                p_obs_given_clean0 = 0.04 * (1.0 - rho)
+            else:
+                p_obs_given_clean1 = 0.85 * (1.0 - rho)
+                p_obs_given_clean0 = rho + 0.96 * (1.0 - rho)
+
+            sec_m = self.estimated_mastery.get(sec_skill) if (sec_skill and sec_skill in self.estimated_mastery) else None
+            cand_p_clean = np.array([
+                compute_game_clean_success_prob(
+                    game=game,
+                    effective_mastery=compute_composite_effective_mastery(th, sec_m),
+                    difficulty=difficulty,
+                    session_trial_counter=self.session_trial_count,
+                    fatigue_sensitivity=self.fatigue_sensitivity_prior,
+                )
+                for th in grid
+            ])
+
+            obs_lik = cand_p_clean * p_obs_given_clean1 + (1.0 - cand_p_clean) * p_obs_given_clean0
+            w_obs = w * obs_lik
+            w_obs_sum = float(np.sum(w_obs))
+            w_obs = w_obs / w_obs_sum if w_obs_sum > 0 else w
+
+            q_cand = np.clip((cand_p_clean * p_obs_given_clean1) / np.maximum(1e-12, obs_lik), 0.0, 1.0)
+
+            # Bilateral transition target: shifts towards 0.95 on success, 0.05 on failure
+            target_m = q_cand * 0.95 + (1.0 - q_cand) * 0.05
+            cand_engagement = 0.60 + 0.40 * float(np.clip(difficulty, 0.0, 1.0))
+            cand_delta = self.learning_rate_prior * (target_m - grid) * cand_engagement
+            cand_next = np.clip(grid + cand_delta, 0.05, 0.95)
+
+            w_next = _project_distribution_onto_grid(cand_next, w_obs, grid)
+            w_next = _diffuse_1d_grid(w_next, grid, self.base_process_noise)
+            self._bayesian_filter_state[prim_skill]["weights"] = w_next
+            new_bf_m = float(np.clip(np.sum(w_next * grid), 0.05, 0.95))
+
+            # 4. Modulated secondary transfer: scaled by trial clean-success expectation q_mean
+            q_mean = float(np.sum(w_obs * q_cand))
+            if sec_skill and sec_skill in self.estimated_mastery:
+                curr_sec_m = self.estimated_mastery[sec_skill]
+                sec_target = q_mean * 0.95 + (1.0 - q_mean) * curr_sec_m
+                sec_delta = self.secondary_transfer_ratio * self.learning_rate_prior * (sec_target - curr_sec_m)
+                new_sec_m = float(np.clip(curr_sec_m + sec_delta, 0.05, 0.95))
+                self.estimated_mastery[sec_skill] = new_sec_m
+
+                if hasattr(self, "_bayesian_filter_state") and sec_skill in getattr(self, "_bayesian_filter_state", {}):
+                    sec_grid = self._bayesian_filter_state[sec_skill]["grid"]
+                    sec_w = self._bayesian_filter_state[sec_skill]["weights"]
+                    sec_delta_grid = self.secondary_transfer_ratio * self.learning_rate_prior * (sec_target - sec_grid)
+                    sec_next = np.clip(sec_grid + sec_delta_grid, 0.05, 0.95)
+                    w_t = _project_distribution_onto_grid(sec_next, sec_w, sec_grid)
+                    w_t = _diffuse_1d_grid(w_t, sec_grid, self.base_process_noise)
+                    self._bayesian_filter_state[sec_skill]["weights"] = w_t
+
+            # 5. Gated fallback blending: activates when reliable residual indicates persistent overestimation
+            if self.rel_residual_ema < self.fallback_threshold and self.heuristic_mastery[prim_skill] < new_bf_m:
+                excess = abs(self.rel_residual_ema - self.fallback_threshold)
+                w_blend = min(0.65, excess / 0.10)
+                blended = (1.0 - w_blend) * new_bf_m + w_blend * self.heuristic_mastery[prim_skill]
+                blended = float(np.clip(blended, 0.05, 0.95))
+                shift = blended - new_bf_m
+                self.estimated_mastery[prim_skill] = blended
+                self._bayesian_filter_state[prim_skill]["weights"] = _project_distribution_onto_grid(grid + shift, w_next, grid)
+
+                if sec_skill and sec_skill in self.estimated_mastery:
+                    bf_sec = self.estimated_mastery[sec_skill]
+                    h_sec = self.heuristic_mastery.get(sec_skill, 0.45)
+                    if h_sec < bf_sec:
+                        blended_sec = (1.0 - w_blend) * bf_sec + w_blend * h_sec
+                        self.estimated_mastery[sec_skill] = float(np.clip(blended_sec, 0.05, 0.95))
+                        s_grid = self._bayesian_filter_state[sec_skill]["grid"]
+                        s_w = self._bayesian_filter_state[sec_skill]["weights"]
+                        self._bayesian_filter_state[sec_skill]["weights"] = _project_distribution_onto_grid(s_grid + (blended_sec - bf_sec), s_w, s_grid)
+            else:
+                self.estimated_mastery[prim_skill] = new_bf_m
+
         elif self.belief_update_mode in ("reliability_aware", "combined_transfer_reliability", "combined"):
             # Observable estimated sensor reliability rho_hat in [0, 1]
             rho = 1.0 if estimated_reliability is None else float(np.clip(estimated_reliability, 0.0, 1.0))
@@ -828,6 +959,17 @@ class ModelAlignedTargetAdaptiveController(ControllerPolicy):
                         0.95,
                     )
                     self._bayesian_filter_state[sec_skill]["weights"] = _project_distribution_onto_grid(sec_next, sec_w, sec_grid)
+
+
+class RobustAdaptiveFilterController(ModelAlignedTargetAdaptiveController):
+    """Production robust adaptive Bayesian filter controller with bilateral practice transitions,
+    session gap uncertainty diffusion, success-modulated secondary transfer, and reliability-gated
+    conservative fallback for distribution shift and temporal dynamics robustness.
+    """
+
+    def __init__(self, task_registry: TaskRegistry, **kwargs):
+        kwargs.setdefault("belief_update_mode", "robust_adaptive_filter")
+        super().__init__(task_registry, **kwargs)
 
 
 
@@ -1049,6 +1191,22 @@ def run_closed_loop_comparison(
             learning_rate_prior=float(target_cfg.get("learning_rate_prior", 0.08)),
             secondary_transfer_ratio=float(target_cfg.get("secondary_transfer_ratio", 0.30)),
             belief_update_mode="approx_bayesian_filter_transfer",
+            cooldown_gap_hours=float(target_cfg.get("cooldown_gap_hours", 2.0)),
+            prior_initializer=prior_initializer,
+        ),
+        "robust_adaptive_filter": lambda: ModelAlignedTargetAdaptiveController(
+            task_registry,
+            target_success_prob=float(target_cfg.get("target_success_prob", 0.75)),
+            initial_difficulty=float(target_cfg.get("initial_difficulty", 0.45)),
+            deadband=float(target_cfg.get("deadband", 0.04)),
+            max_step_change=float(target_cfg.get("max_step_change", 0.08)),
+            min_difficulty=float(target_cfg.get("min_difficulty", 0.08)),
+            max_difficulty=float(target_cfg.get("max_difficulty", 0.95)),
+            fatigue_sensitivity_prior=float(target_cfg.get("fatigue_sensitivity_prior", 0.02)),
+            forgetting_rate_prior=float(target_cfg.get("forgetting_rate_prior", 0.02)),
+            learning_rate_prior=float(target_cfg.get("learning_rate_prior", 0.08)),
+            secondary_transfer_ratio=float(target_cfg.get("secondary_transfer_ratio", 0.30)),
+            belief_update_mode="robust_adaptive_filter",
             cooldown_gap_hours=float(target_cfg.get("cooldown_gap_hours", 2.0)),
             prior_initializer=prior_initializer,
         ),

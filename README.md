@@ -51,6 +51,7 @@ Comprehensive documentation has been organized into dedicated modules:
   - [Phase 3 Model Alignment Report](docs/research/phase_3/PHASE_3_MODEL_ALIGNMENT_REPORT.md)
   - [Phase 4 State Estimation & Robustness Report](docs/research/phase_4/PHASE_4_STATE_ESTIMATION_REPORT.md)
   - [Phase 5 State Estimation, Robustness, & Model Selector Report](docs/research/phase_5/PHASE_5_STATE_ESTIMATION_AND_SELECTION_REPORT.md)
+  - [Phase 5 Estimator Robustness Extension & Final Validation Report](docs/research/phase_5/ESTIMATOR_ROBUSTNESS_EXTENSION.md)
 
 ---
 
@@ -68,10 +69,10 @@ pip install -e .
 
 ### 4.2 Run All Automated Tests
 ```bash
-# Clean-checkout self-contained test suite (66 tests across 10 modules)
+# Clean-checkout self-contained test suite (73 tests across 11 modules)
 python -m pytest -v tests
 ```
-*Current Result:* **66 passed, 1 skipped in ~11s** on clean checkout (or **67 passed in ~34s** when full experimental artifacts are present) on Python 3.13 / pytest 9.1.
+*Current Result:* **73 passed, 1 skipped in ~10s** on clean checkout (or **74 passed in ~34s** when full experimental artifacts are present) on Python 3.12 / 3.13 and pytest 9.1.
 
 > [!NOTE]
 > **Artifact Availability & Evidence Archives**: All four historical evidence ZIP archives (`evidence/phase_N/*.zip`) and large multi-hundred-megabyte raw event interaction logs are excluded from public Git tracking via `.gitignore`. The core test suite runs 100% self-contained using deterministic test fixtures in `tests/fixtures/`. Full raw interaction logs can be regenerated at any time using the simulation scripts in Sections 4.3–4.5.

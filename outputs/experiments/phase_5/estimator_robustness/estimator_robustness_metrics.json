@@ -1,0 +1,115 @@
+{
+  "timestamp": "2026-10-18T13:57:02Z",
+  "dev_seeds": [
+    101,
+    202,
+    303
+  ],
+  "fresh_held_out_seeds": [
+    1103,
+    1207,
+    1301,
+    1409,
+    1511
+  ],
+  "num_learners_per_seed": 20,
+  "trials_per_learner": 60,
+  "policies": [
+    "model_aligned_baseline",
+    "approx_bayesian_filter_transfer",
+    "robust_adaptive_filter"
+  ],
+  "scenarios": [
+    "base_heterogeneous",
+    "reliability_stress",
+    "simple_dynamics",
+    "temporal_dynamics",
+    "distribution_shift"
+  ],
+  "held_out_comparison": [
+    {
+      "scenario": "base_heterogeneous",
+      "display_name": "Base / Heterogeneous",
+      "baseline_mae": 0.1058,
+      "phase_5_filter_mae": 0.0998,
+      "robust_adaptive_mae": 0.1035,
+      "diff_vs_filter_abs": 0.0037,
+      "diff_vs_filter_pct": 3.71,
+      "diff_vs_baseline_abs": -0.0023,
+      "diff_vs_baseline_pct": -2.17,
+      "baseline_bias": -0.0301,
+      "phase_5_filter_bias": -0.0122,
+      "robust_adaptive_bias": -0.0276
+    },
+    {
+      "scenario": "reliability_stress",
+      "display_name": "Reliability Stress",
+      "baseline_mae": 0.1242,
+      "phase_5_filter_mae": 0.1002,
+      "robust_adaptive_mae": 0.1048,
+      "diff_vs_filter_abs": 0.0046,
+      "diff_vs_filter_pct": 4.59,
+      "diff_vs_baseline_abs": -0.0194,
+      "diff_vs_baseline_pct": -15.62,
+      "baseline_bias": -0.0847,
+      "phase_5_filter_bias": -0.0316,
+      "robust_adaptive_bias": -0.0428
+    },
+    {
+      "scenario": "simple_dynamics",
+      "display_name": "Simple Dynamics",
+      "baseline_mae": 0.1543,
+      "phase_5_filter_mae": 0.1537,
+      "robust_adaptive_mae": 0.1548,
+      "diff_vs_filter_abs": 0.0011,
+      "diff_vs_filter_pct": 0.72,
+      "diff_vs_baseline_abs": 0.0005,
+      "diff_vs_baseline_pct": 0.32,
+      "baseline_bias": -0.0698,
+      "phase_5_filter_bias": -0.0628,
+      "robust_adaptive_bias": -0.0739
+    },
+    {
+      "scenario": "temporal_dynamics",
+      "display_name": "Temporal Dynamics",
+      "baseline_mae": 0.1008,
+      "phase_5_filter_mae": 0.1179,
+      "robust_adaptive_mae": 0.1027,
+      "diff_vs_filter_abs": -0.0152,
+      "diff_vs_filter_pct": -12.89,
+      "diff_vs_baseline_abs": 0.0019,
+      "diff_vs_baseline_pct": 1.88,
+      "baseline_bias": 0.0713,
+      "phase_5_filter_bias": 0.1001,
+      "robust_adaptive_bias": 0.0755
+    },
+    {
+      "scenario": "distribution_shift",
+      "display_name": "Distribution Shift",
+      "baseline_mae": 0.1762,
+      "phase_5_filter_mae": 0.2405,
+      "robust_adaptive_mae": 0.2074,
+      "diff_vs_filter_abs": -0.0331,
+      "diff_vs_filter_pct": -13.76,
+      "diff_vs_baseline_abs": 0.0312,
+      "diff_vs_baseline_pct": 17.71,
+      "baseline_bias": 0.1731,
+      "phase_5_filter_bias": 0.2396,
+      "robust_adaptive_bias": 0.2059
+    },
+    {
+      "scenario": "overall_macro_mean",
+      "display_name": "overall_macro_mean",
+      "baseline_mae": 0.1323,
+      "phase_5_filter_mae": 0.1424,
+      "robust_adaptive_mae": 0.1347,
+      "diff_vs_filter_abs": -0.0077,
+      "diff_vs_filter_pct": -5.41,
+      "diff_vs_baseline_abs": 0.0024,
+      "diff_vs_baseline_pct": 1.81,
+      "baseline_bias": 0.012,
+      "phase_5_filter_bias": 0.0466,
+      "robust_adaptive_bias": 0.0274
+    }
+  ]
+}

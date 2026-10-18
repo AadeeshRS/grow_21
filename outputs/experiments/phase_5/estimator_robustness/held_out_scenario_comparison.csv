@@ -1,0 +1,7 @@
+scenario,display_name,baseline_mae,phase_5_filter_mae,robust_adaptive_mae,diff_vs_filter_abs,diff_vs_filter_pct,diff_vs_baseline_abs,diff_vs_baseline_pct,baseline_bias,phase_5_filter_bias,robust_adaptive_bias
+base_heterogeneous,Base / Heterogeneous,0.1058,0.0998,0.1035,0.0037,3.71,-0.0023,-2.17,-0.0301,-0.0122,-0.0276
+reliability_stress,Reliability Stress,0.1242,0.1002,0.1048,0.0046,4.59,-0.0194,-15.62,-0.0847,-0.0316,-0.0428
+simple_dynamics,Simple Dynamics,0.1543,0.1537,0.1548,0.0011,0.72,0.0005,0.32,-0.0698,-0.0628,-0.0739
+temporal_dynamics,Temporal Dynamics,0.1008,0.1179,0.1027,-0.0152,-12.89,0.0019,1.88,0.0713,0.1001,0.0755
+distribution_shift,Distribution Shift,0.1762,0.2405,0.2074,-0.0331,-13.76,0.0312,17.71,0.1731,0.2396,0.2059
+overall_macro_mean,overall_macro_mean,0.1323,0.1424,0.1347,-0.0077,-5.41,0.0024,1.81,0.012,0.0466,0.0274

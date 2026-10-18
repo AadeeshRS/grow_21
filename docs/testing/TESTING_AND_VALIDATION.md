@@ -2,8 +2,8 @@
 
 **Date:** October 18, 2026  
 **Audited Status:** Complete, Verified, and Deterministic  
-**Full Suite Result:** **66 passed in 23.76s** across 10 test modules  
-**Validated Environment:** Python 3.13.11, pytest 9.1.1, pluggy 1.7.0, Windows 11 (win32)  
+**Full Suite Result:** **73 passed in ~10s** across 11 test modules  
+**Validated Environment:** Python 3.12 / 3.13, pytest 9.1.1, pluggy 1.6/1.7, Windows 11 (win32)  
 
 ---
 
@@ -11,7 +11,7 @@
 > **MANDATORY CLINICAL & RESEARCH DISCLAIMER**  
 > All automated tests, empirical simulations, and statistical evaluations described in this document use **entirely synthetic computational agents and simulated sensor noise models**. 
 > - **NO real-child data collection, clinical trials, or developmental studies have been conducted.**
-> - Passing 66 unit/regression tests is **software verification of code invariants**, NOT proof of educational effectiveness, cognitive validity, or clinical suitability for children with Down syndrome (Trisomy 21).
+> - Passing 73 unit/regression tests is **software verification of code invariants**, NOT proof of educational effectiveness, cognitive validity, or clinical suitability for children with Down syndrome (Trisomy 21).
 > - Do not cite unit test pass rates as predictive accuracy, and do not describe synthetic simulation campaigns as human user trials.
 
 ---
@@ -23,8 +23,8 @@ To maintain scientific integrity, the Grow21 project distinguishes between five 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │ LEVEL 1: Deterministic Automated Tests (pytest full suite)             │
-│ • 66 tests across 10 modules verifying software invariants, bounds,    │
-│   causal no-leakage timing, and regression edge cases in ~24s.         │
+│ • 73 tests across 11 modules verifying software invariants, bounds,    │
+│   causal no-leakage timing, and regression edge cases in ~10s.         │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
 ┌───────────────────────────────────▼────────────────────────────────────┐
@@ -144,6 +144,7 @@ python -m pytest -v -m "not full_artifacts"
 | [`tests/test_outcome_model_alignment.py`](../../tests/test_outcome_model_alignment.py) | 10 | Phase 3 model alignment: canonical 3-parameter IRT clean success parity across all 9 games (7,938 grid points, max error strictly $0.00\text{e}+00$), bisection solver reachability, step-limiting ($|\Delta D| \le 0.08$), non-linear difficulty curves, and legacy vs aligned bound saturation contrast. |
 | [`tests/test_belief_state_estimation.py`](../../tests/test_belief_state_estimation.py) | 14 | Phase 4 state estimation: time alignment separating pre-outcome belief estimation from post-outcome belief updating, secondary transfer tracking on unpracticed skills, strict no-leakage of hidden ground truth, observation likelihood normalization, paired seed-aware cluster bootstrap invariants, split separation across cohorts, self-contained deterministic fixture recomputation, and full-artifact volume verification. |
 | [`tests/test_phase_5_state_estimation.py`](../../tests/test_phase_5_state_estimation.py) | 11 | Phase 5 state estimation: expected transitions increase on both success and failure, analytical formula verification, secondary transfer ceiling ($0.95$), single forgetting per event, mastery prior defaults/fallbacks, synthetic parent-proxy no-leakage, **critical semantic safeguard** (prohibits routing $P(y_{\text{obs}})$ into clean-success controller), open-loop replay consistency, and offline model selector reproducibility (individual vs all). |
+| [`tests/test_estimator_robustness.py`](../../tests/test_estimator_robustness.py) | 7 | Phase 5.2 estimator robustness: bilateral transition symmetry (no ratcheting drift on failure), session gap uncertainty diffusion, reliability-weighted residual innovation gating, secondary transfer modulation, strict zero data leakage, and deterministic reproducibility. |
 | [`tests/test_documentation_integrity.py`](../../tests/test_documentation_integrity.py) | 4 | Documentation integrity: absence of non-printing ASCII control characters in text files, absence of literal tabs in Markdown, preservation of required LaTeX expressions and code identifiers, and absence of fractured multi-line LaTeX splits. |
 
 
