@@ -1,0 +1,18 @@
+{
+  "simple_dynamics": {
+    "models": {
+      "vanilla_dkt": {
+        "log_loss_mean": 0.7032,
+        "log_loss_std": 0.0,
+        "brier_score_mean": 0.2549,
+        "brier_score_std": 0.0,
+        "roc_auc_mean": 0.4908,
+        "roc_auc_std": 0.0,
+        "accuracy_mean": 0.4852,
+        "accuracy_std": 0.0,
+        "runtime_sec_mean": 1.17,
+        "param_count": 13273
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+[
+  {
+    "original_path": "outputs/closed_loop_events.csv",
+    "archived_path": "outputs/archive/pre_correction_pass/closed_loop_events.csv",
+    "size_bytes": 811092,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "a3f94fa7ca1f4190564297071f9d691c5c81c16489ea8f04ec0a17e31fed98bb"
+  },
+  {
+    "original_path": "outputs/closed_loop_summary.json",
+    "archived_path": "outputs/archive/pre_correction_pass/closed_loop_summary.json",
+    "size_bytes": 1756,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "91cb647e5c659bd8a78ca627a047b6481a77d6819751f9e5a13c96fbbaf9612c"
+  },
+  {
+    "original_path": "outputs/metrics.csv",
+    "archived_path": "outputs/archive/pre_correction_pass/metrics.csv",
+    "size_bytes": 4686,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "5d1c6383914dc7d956d75b7bf3182f49be9f8c1d0221898419cea9370eb23d63"
+  },
+  {
+    "original_path": "outputs/summary.json",
+    "archived_path": "outputs/archive/pre_correction_pass/summary.json",
+    "size_bytes": 5905,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "17d2ddb219a7968c0470cf18bcd2c7911a219504d9ab1de29eda21da993bf738"
+  },
+  {
+    "original_path": "outputs/synthetic_smoke.csv",
+    "archived_path": "outputs/archive/pre_correction_pass/synthetic_smoke.csv",
+    "size_bytes": 182572,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "b13f1d387896388e5a70d99b2d1a5bfc79266732abdb25d9d273227a0092307d"
+  },
+  {
+    "original_path": "outputs/audit/BUNDLE_INDEX.md",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/BUNDLE_INDEX.md",
+    "size_bytes": 5796,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "fc73da68a7e2d7f3cbe3f3dbb9f7173114e0097910aff544ac157eb46b9b992e"
+  },
+  {
+    "original_path": "outputs/audit/calibration_bins.csv",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/calibration_bins.csv",
+    "size_bytes": 32282,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "859d815d1e708b1d07b24c1c02be255e4185bfc01a67951ee1fdcd2d6bdcd31b"
+  },
+  {
+    "original_path": "outputs/audit/CHANGELOG_PHASE_2.md",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/CHANGELOG_PHASE_2.md",
+    "size_bytes": 4642,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "ff0966627f2e88d97efd6a9625f72dd31378dcef509eb04003caa3e2a6fb0b1f"
+  },
+  {
+    "original_path": "outputs/audit/Grow21_Phase_2_Audit_Evidence.zip",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/Grow21_Phase_2_Audit_Evidence.zip",
+    "size_bytes": 1028649,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "891089f1791a2a340522ff358b916683249d48ec758d956a003072cc272b7572"
+  },
+  {
+    "original_path": "outputs/audit/PHASE_2_AUDIT_REPORT.md",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/PHASE_2_AUDIT_REPORT.md",
+    "size_bytes": 20846,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "bfa8537b2b6a3e267d37973511d0ba8017ea4d67f620c7a7e434e95a6abc8eaa"
+  },
+  {
+    "original_path": "outputs/audit/reliability_sweep_summary.json",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/reliability_sweep_summary.json",
+    "size_bytes": 2961,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "bf9747c35b1f09504320608b35bfdf07f53af3c04ab1f9c9ee60f8c6ead24ab4"
+  },
+  {
+    "original_path": "outputs/audit/REPRODUCE.md",
+    "archived_path": "outputs/archive/pre_correction_pass/audit/REPRODUCE.md",
+    "size_bytes": 2764,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "6c04d77b1458cfe24a1aff5b78bc562989a5007506315e6deddf6ee5b051e2be"
+  },
+  {
+    "original_path": "outputs/plots/calibration_base_heterogeneous.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/calibration_base_heterogeneous.png",
+    "size_bytes": 141676,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "7c7a6cc0679549c99663f568b5aad48b0bb533f3e965db0a8c764857685cdbef"
+  },
+  {
+    "original_path": "outputs/plots/calibration_distribution_shift.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/calibration_distribution_shift.png",
+    "size_bytes": 152359,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "bcc4464cb9673365fe8fefd3e461852a95f56097d5a6915e87981f08f0dfee10"
+  },
+  {
+    "original_path": "outputs/plots/calibration_reliability_stress.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/calibration_reliability_stress.png",
+    "size_bytes": 131682,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "b2ac47465eb71cc66ed073bb5f2ca071143ca7ebe1be3d21303cbe4177a0a1b3"
+  },
+  {
+    "original_path": "outputs/plots/calibration_simple_dynamics.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/calibration_simple_dynamics.png",
+    "size_bytes": 136151,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "46c33fefc44a79ca3d031a668c9922160d7583688327db40d212e9ef4cb8ebad"
+  },
+  {
+    "original_path": "outputs/plots/calibration_temporal_dynamics.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/calibration_temporal_dynamics.png",
+    "size_bytes": 139897,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "3640cf49b4db342dad167944247ce440487c36d71adabc51dcb6999b26db3013"
+  },
+  {
+    "original_path": "outputs/plots/closed_loop_comparison.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/closed_loop_comparison.png",
+    "size_bytes": 109932,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "f56373b1f567e42a4f9ceadb2a8afc0ee6fa3e0392d41abc15749b5f840ec6fb"
+  },
+  {
+    "original_path": "outputs/plots/scenario_comparison.png",
+    "archived_path": "outputs/archive/pre_correction_pass/plots/scenario_comparison.png",
+    "size_bytes": 150123,
+    "description": "Preserved Phase 2 pre-correction pass artifact",
+    "sha256": "d78df81562ee8369210d205349dedef57b1a091f92e6eb8db429ccd5a48fd445"
+  }
+]

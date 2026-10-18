@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-10-18T10:02:59Z",
+  "phase": "Phase 5",
+  "description": "Pre-evaluation frozen configuration snapshot",
+  "policies": [
+    "model_aligned_baseline",
+    "transfer_aware",
+    "reliability_aware",
+    "combined_transfer_reliability",
+    "expected_transition",
+    "expected_transition_transfer",
+    "approx_bayesian_filter",
+    "approx_bayesian_filter_transfer"
+  ],
+  "cohorts": {
+    "dev_seeds": [
+      101,
+      202,
+      303
+    ],
+    "historical_seeds": [
+      42,
+      123,
+      999
+    ],
+    "phase_4_eval_seeds": [
+      777,
+      888,
+      555
+    ],
+    "final_held_out_seeds": [
+      707,
+      808,
+      909
+    ]
+  },
+  "file_hashes": {
+    "configs/default.yaml": "f678c4dd84a735204f3c9eb984ccda208db6d910381bc726b8e48455d88522bd",
+    "configs/scenarios.yaml": "d1b557818066ae4ab4acee8f8a0b2570150cdb6cfae3cb9d26a039f2c08194f3",
+    "src/grow21_simulation_benchmark/simulator.py": "b5dd48e468d78ad7bc33a3a09992e1e21c7e2b88a399698bea719ec023eb1ee5",
+    "src/grow21_simulation_benchmark/closed_loop.py": "85fce619e76a6d07d60c8959a89476377177f96e022b91ee08e07e1a2fe865d7",
+    "src/grow21_simulation_benchmark/outcome_model.py": "9ae10d5646bb92ed1cc96c119779208fda38b6e26ec4ae443a41bb43c9065785",
+    "src/grow21_simulation_benchmark/initializers.py": "42f0e88405b8a07ff852c3a3602e02fe7d5732312596d88ab0fd36d4e929e901",
+    "src/grow21_simulation_benchmark/run_phase_5_experiments.py": "7520f2e0fe4c372ec87090f0ce82deb4a1a9149d49beec16a091c8e195f05174"
+  }
+}

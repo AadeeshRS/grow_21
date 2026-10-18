@@ -1,0 +1,47 @@
+{
+  "fixed_difficulty": {
+    "mastery_gain_all_skills_mean": -0.0319,
+    "mastery_gain_all_skills_std": 0.059,
+    "mastery_gain_practiced_skills_mean": -0.0451,
+    "mastery_gain_practiced_skills_std": 0.0682,
+    "observed_success_rate_mean": 0.4714,
+    "clean_success_rate_mean": 0.5275,
+    "direction_reversals_mean": 4.733,
+    "direction_reversals_std": 2.007,
+    "total_difficulty_variation_mean": 2.392,
+    "total_difficulty_variation_std": 1.028,
+    "mean_difficulty": 0.48,
+    "total_frustration_violations": 0,
+    "total_break_limit_violations": 0
+  },
+  "streak_adaptive": {
+    "mastery_gain_all_skills_mean": -0.0083,
+    "mastery_gain_all_skills_std": 0.0562,
+    "mastery_gain_practiced_skills_mean": -0.0221,
+    "mastery_gain_practiced_skills_std": 0.0656,
+    "observed_success_rate_mean": 0.6356,
+    "clean_success_rate_mean": 0.7186,
+    "direction_reversals_mean": 5.467,
+    "direction_reversals_std": 1.658,
+    "total_difficulty_variation_mean": 2.032,
+    "total_difficulty_variation_std": 0.217,
+    "mean_difficulty": 0.192,
+    "total_frustration_violations": 0,
+    "total_break_limit_violations": 0
+  },
+  "target_adaptive": {
+    "mastery_gain_all_skills_mean": -0.0092,
+    "mastery_gain_all_skills_std": 0.0562,
+    "mastery_gain_practiced_skills_mean": -0.0234,
+    "mastery_gain_practiced_skills_std": 0.0652,
+    "observed_success_rate_mean": 0.6769,
+    "clean_success_rate_mean": 0.7664,
+    "direction_reversals_mean": 0.0,
+    "direction_reversals_std": 0.0,
+    "total_difficulty_variation_mean": 0.29,
+    "total_difficulty_variation_std": 0.0,
+    "mean_difficulty": 0.091,
+    "total_frustration_violations": 0,
+    "total_break_limit_violations": 0
+  }
+}

@@ -1,0 +1,7 @@
+selected_model,target_semantics,safe_for_clean_controller,scenario,seed,runtime_sec,log_loss,brier_score,accuracy
+logistic_baseline,P(y_obs=1 | features),False,simple_dynamics,101,0.57,0.6574,0.2314,0.6259
+vanilla_dkt,P(y_obs=1 | features),False,simple_dynamics,101,3.16,0.7032,0.2549,0.4852
+reliability_gated_dkt,P(y_obs=1 | features),False,simple_dynamics,101,0.96,0.693,0.2499,0.5222
+all_mode_logistic_baseline,P(y_obs=1 | features),False,simple_dynamics,101,2.15,0.6574,0.2314,0.6259
+all_mode_vanilla_dkt,P(y_obs=1 | features),False,simple_dynamics,101,2.15,0.7032,0.2549,0.4852
+all_mode_reliability_gated_dkt,P(y_obs=1 | features),False,simple_dynamics,101,2.15,0.693,0.2499,0.5222

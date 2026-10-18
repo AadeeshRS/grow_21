@@ -1,0 +1,2 @@
+scenario,seed,model,runtime_sec,param_count,log_loss,brier_score,roc_auc,accuracy,balanced_accuracy,ece,test_events,test_learners
+simple_dynamics,101,vanilla_dkt,1.171,13273,0.7032,0.2549,0.4908,0.4852,0.489,0.0664,270,9

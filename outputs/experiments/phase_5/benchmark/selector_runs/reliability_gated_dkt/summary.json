@@ -1,0 +1,18 @@
+{
+  "simple_dynamics": {
+    "models": {
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.693,
+        "log_loss_std": 0.0,
+        "brier_score_mean": 0.2499,
+        "brier_score_std": 0.0,
+        "roc_auc_mean": 0.5194,
+        "roc_auc_std": 0.0,
+        "accuracy_mean": 0.5222,
+        "accuracy_std": 0.0,
+        "runtime_sec_mean": 0.46,
+        "param_count": 13273
+      }
+    }
+  }
+}

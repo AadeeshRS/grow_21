@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches and temporary test directories
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+scratch/
+scratch_*/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Large experiment-generated raw event interaction logs (>25MB)
+# Note: Raw interaction event logs contain hundreds of thousands or millions of individual rows.
+# These files exceed standard Git file limits and are recommended for Git LFS or release storage.
+# Compact summary metrics, calibration tables, paired bootstrap CIs, plots, and fixtures remain tracked.
+outputs/experiments/phase_3/closed_loop/phase_3_closed_loop_events.csv
+outputs/experiments/phase_4/state_estimation/phase_4_event_metrics.csv
+outputs/experiments/phase_5/closed_loop/phase_5_event_metrics.csv
+outputs/experiments/phase_5/open_loop/open_loop_events.csv
+outputs/archive/phase_4_pre_correction/outputs_phase_4_state_estimation_phase_4_event_metrics.csv
+
+# Evidence ZIP bundles (local-only research archives, excluded from repository)
+# All four self-contained evidence ZIPs are preserved locally for provenance and release hosting.
+# The public repository tracks compact summaries, calibration tables, bootstrap CIs, plots, and fixtures.
+evidence/phase_2/Grow21_Phase_2_Audit_Evidence.zip
+evidence/phase_3/Grow21_Phase_3_Model_Alignment_Evidence.zip
+evidence/phase_4/Grow21_Phase_4_State_Estimation_Evidence.zip
+evidence/phase_5/Grow21_Phase_5_Evidence.zip
+
+

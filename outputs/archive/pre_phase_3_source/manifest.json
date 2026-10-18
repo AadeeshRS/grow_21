@@ -1,0 +1,86 @@
+[
+  {
+    "original_path": "PROJECT_STRUCTURE.md",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\PROJECT_STRUCTURE.md",
+    "size_bytes": 7067,
+    "sha256": "cae24493a056100c540bf65f480c66716459cf50b8c691efdd1a32c17cbfc8df"
+  },
+  {
+    "original_path": "README.md",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\README.md",
+    "size_bytes": 17584,
+    "sha256": "d82cd42639cab2dbe11d1cd6638a7263cbcc7537a00485b104c09ba901ceaaae"
+  },
+  {
+    "original_path": "configs/default.yaml",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\configs\\default.yaml",
+    "size_bytes": 5099,
+    "sha256": "1e8281d47a11d3d46ffd4d96cbe97387749635c873df3ac3828655ebdb6fa67d"
+  },
+  {
+    "original_path": "configs/scenarios.yaml",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\configs\\scenarios.yaml",
+    "size_bytes": 3786,
+    "sha256": "d1b557818066ae4ab4acee8f8a0b2570150cdb6cfae3cb9d26a039f2c08194f3"
+  },
+  {
+    "original_path": "pyproject.toml",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\pyproject.toml",
+    "size_bytes": 660,
+    "sha256": "0e488ff018fe66595262c72617669ca782d9dff43d6b92855f64cce2ecf775f6"
+  },
+  {
+    "original_path": "requirements.txt",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\requirements.txt",
+    "size_bytes": 119,
+    "sha256": "5770ebe7976aafb123e6d83fe8c1b9a53cbd9971d2b1d9d6fa8d62bb00fa9fc0"
+  },
+  {
+    "original_path": "src/grow21_simulation_benchmark/closed_loop.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\src\\grow21_simulation_benchmark\\closed_loop.py",
+    "size_bytes": 26042,
+    "sha256": "9464c2abe88f940a46451e6dafcdf10bbb8261fbfddc65047519772aaec1a94c"
+  },
+  {
+    "original_path": "src/grow21_simulation_benchmark/paths.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\src\\grow21_simulation_benchmark\\paths.py",
+    "size_bytes": 1107,
+    "sha256": "89e3e2c6009daf53f9814fed7560ba6b818fe55c1ae57e7dcfc62a051f1dae03"
+  },
+  {
+    "original_path": "src/grow21_simulation_benchmark/run_closed_loop.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\src\\grow21_simulation_benchmark\\run_closed_loop.py",
+    "size_bytes": 11231,
+    "sha256": "0238975dea6fa3be8591d09a84955cbb22724e4cb5915738ad5294a3cd9ebbec"
+  },
+  {
+    "original_path": "src/grow21_simulation_benchmark/simulator.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\src\\grow21_simulation_benchmark\\simulator.py",
+    "size_bytes": 11799,
+    "sha256": "cd4bb39e124587bd22a022205344b6e01d3d8927c60012917f83649b2ac8e1d7"
+  },
+  {
+    "original_path": "src/grow21_simulation_benchmark/tasks.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\src\\grow21_simulation_benchmark\\tasks.py",
+    "size_bytes": 6696,
+    "sha256": "0db3f8730359e5feb173ae4647263016c8ca565dc3af94d07bdbd5c1b30c9399"
+  },
+  {
+    "original_path": "tests/test_audit_regressions.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\tests\\test_audit_regressions.py",
+    "size_bytes": 21928,
+    "sha256": "97d7510340bd68300fb615200a1465da0fb63e468ff411b38a2264899359d73e"
+  },
+  {
+    "original_path": "tests/test_controller_constraints.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\tests\\test_controller_constraints.py",
+    "size_bytes": 4838,
+    "sha256": "5fefbdc871094dd7a71de0749a714c1f4337e766c4225f1f175df0bedcef90ab"
+  },
+  {
+    "original_path": "tests/test_documentation_integrity.py",
+    "archived_path": "outputs\\archive\\pre_phase_3_source\\tests\\test_documentation_integrity.py",
+    "size_bytes": 4500,
+    "sha256": "ed95a131ffecf16586f546532994ba115e0369b21b000b78eae9bedbb1a49206"
+  }
+]

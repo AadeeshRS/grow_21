@@ -1,0 +1,98 @@
+[
+  {
+    "original_path": "outputs/audit/phase_4/PHASE_4_STATE_ESTIMATION_REPORT.md",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_PHASE_4_STATE_ESTIMATION_REPORT.md",
+    "size_bytes": 17873,
+    "sha256": "de9f3c4454adad23612be3e8777e33ceeaa05097726aa0bc5ab017d11c435efa"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/REPRODUCE.md",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_REPRODUCE.md",
+    "size_bytes": 5146,
+    "sha256": "4abcac01f41d9af4c08d5b6184f8d26f0504e19902ba32a07b92684f2f72ed93"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/CHANGELOG_PHASE_4.md",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_CHANGELOG_PHASE_4.md",
+    "size_bytes": 5415,
+    "sha256": "9ef59fba3f7986edfada9543d50062c000e79cacc2be5d17b78597164fed0402"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/BUNDLE_INDEX.md",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_BUNDLE_INDEX.md",
+    "size_bytes": 7514,
+    "sha256": "0306852b9f5efb6cf50d55805db780a222e98193994dcbec6df27050cf09f2b7"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/phase_4_scenario_summary.json",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_phase_4_scenario_summary.json",
+    "size_bytes": 30924,
+    "sha256": "5c596f9070d20d69ebbc16295ed936d8cd2de3ccc0b4ea83a3a89353d353e18c"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/phase_4_calibration_bins.csv",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_phase_4_calibration_bins.csv",
+    "size_bytes": 16007,
+    "sha256": "6f40ae0fc9336608603edd151dbd37ad0daccd7a8368e35e852e407e08fe2465"
+  },
+  {
+    "original_path": "outputs/audit/phase_4/phase_4_mastery_estimation_metrics.csv",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_audit_phase_4_phase_4_mastery_estimation_metrics.csv",
+    "size_bytes": 7200,
+    "sha256": "6619c1f40c56cc85bcd6267f13386771b8a2c6f2288ee0b0f43182271b6fd974"
+  },
+  {
+    "original_path": "outputs/phase_4/state_estimation/phase_4_scenario_summary.json",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_state_estimation_phase_4_scenario_summary.json",
+    "size_bytes": 30924,
+    "sha256": "5c596f9070d20d69ebbc16295ed936d8cd2de3ccc0b4ea83a3a89353d353e18c"
+  },
+  {
+    "original_path": "outputs/phase_4/state_estimation/phase_4_calibration_bins.csv",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_state_estimation_phase_4_calibration_bins.csv",
+    "size_bytes": 16007,
+    "sha256": "6f40ae0fc9336608603edd151dbd37ad0daccd7a8368e35e852e407e08fe2465"
+  },
+  {
+    "original_path": "outputs/phase_4/state_estimation/phase_4_mastery_estimation_metrics.csv",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_state_estimation_phase_4_mastery_estimation_metrics.csv",
+    "size_bytes": 7200,
+    "sha256": "6619c1f40c56cc85bcd6267f13386771b8a2c6f2288ee0b0f43182271b6fd974"
+  },
+  {
+    "original_path": "outputs/phase_4/state_estimation/phase_4_event_metrics.csv",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_state_estimation_phase_4_event_metrics.csv",
+    "size_bytes": 173930760,
+    "sha256": "583c6f84b1920f2d38ea7f5dafec9f75e86254a9f177bd4ea87d80a4027ab0d4"
+  },
+  {
+    "original_path": "outputs/phase_4/plots/phase_4_calibration_curves.png",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_plots_phase_4_calibration_curves.png",
+    "size_bytes": 418683,
+    "sha256": "a59d475753f12226eef4f76e22a1489c3d0992768d4b83363183eb4393ba37b2"
+  },
+  {
+    "original_path": "outputs/phase_4/plots/phase_4_difficulty_trajectories.png",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_plots_phase_4_difficulty_trajectories.png",
+    "size_bytes": 367675,
+    "sha256": "2f764ce454b1bc4489e7a65425e6d2029ed5497a1370a052b8d32ba43542eb16"
+  },
+  {
+    "original_path": "outputs/phase_4/plots/phase_4_mastery_estimation_errors.png",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_plots_phase_4_mastery_estimation_errors.png",
+    "size_bytes": 227299,
+    "sha256": "1fb77ee4ba3358f13835eebb819901fc925f69847ee6ebe924e4a0d13635ca27"
+  },
+  {
+    "original_path": "outputs/phase_4/plots/phase_4_prediction_gaps_by_game.png",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_plots_phase_4_prediction_gaps_by_game.png",
+    "size_bytes": 168103,
+    "sha256": "52251cd98cc3aa10eec9b5a0b107bb3582cfa031687215cc3b08dd3969b20d3a"
+  },
+  {
+    "original_path": "outputs/phase_4/plots/phase_4_prediction_gaps_by_scenario.png",
+    "archive_path": "outputs/archive/phase_4_pre_correction/outputs_phase_4_plots_phase_4_prediction_gaps_by_scenario.png",
+    "size_bytes": 153891,
+    "sha256": "dcb67e7eb21c1a16336641b9e707b76071adf65e470ee9c8f3ec1383f172a214"
+  }
+]

@@ -1,0 +1,202 @@
+{
+  "base_heterogeneous": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.6256,
+        "log_loss_std": 0.0026,
+        "brier_score_mean": 0.2179,
+        "brier_score_std": 0.0012,
+        "roc_auc_mean": 0.6769,
+        "roc_auc_std": 0.0056,
+        "accuracy_mean": 0.6474,
+        "accuracy_std": 0.0029,
+        "runtime_sec_mean": 0.24,
+        "param_count": 54
+      },
+      "vanilla_dkt": {
+        "log_loss_mean": 0.6275,
+        "log_loss_std": 0.0026,
+        "brier_score_mean": 0.2188,
+        "brier_score_std": 0.0011,
+        "roc_auc_mean": 0.6735,
+        "roc_auc_std": 0.0033,
+        "accuracy_mean": 0.647,
+        "accuracy_std": 0.0007,
+        "runtime_sec_mean": 25.16,
+        "param_count": 13273
+      },
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.627,
+        "log_loss_std": 0.0024,
+        "brier_score_mean": 0.2186,
+        "brier_score_std": 0.0011,
+        "roc_auc_mean": 0.6744,
+        "roc_auc_std": 0.0049,
+        "accuracy_mean": 0.6484,
+        "accuracy_std": 0.0035,
+        "runtime_sec_mean": 31.22,
+        "param_count": 13273
+      }
+    }
+  },
+  "reliability_stress": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.5969,
+        "log_loss_std": 0.0024,
+        "brier_score_mean": 0.2049,
+        "brier_score_std": 0.0011,
+        "roc_auc_mean": 0.6625,
+        "roc_auc_std": 0.0046,
+        "accuracy_mean": 0.6823,
+        "accuracy_std": 0.0056,
+        "runtime_sec_mean": 0.23,
+        "param_count": 54
+      },
+      "vanilla_dkt": {
+        "log_loss_mean": 0.5976,
+        "log_loss_std": 0.0008,
+        "brier_score_mean": 0.2054,
+        "brier_score_std": 0.0003,
+        "roc_auc_mean": 0.6611,
+        "roc_auc_std": 0.0072,
+        "accuracy_mean": 0.6779,
+        "accuracy_std": 0.0091,
+        "runtime_sec_mean": 28.51,
+        "param_count": 13273
+      },
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.5975,
+        "log_loss_std": 0.0011,
+        "brier_score_mean": 0.2052,
+        "brier_score_std": 0.0005,
+        "roc_auc_mean": 0.6615,
+        "roc_auc_std": 0.0057,
+        "accuracy_mean": 0.6811,
+        "accuracy_std": 0.006,
+        "runtime_sec_mean": 34.24,
+        "param_count": 13273
+      }
+    }
+  },
+  "simple_dynamics": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.6452,
+        "log_loss_std": 0.0061,
+        "brier_score_mean": 0.2268,
+        "brier_score_std": 0.0029,
+        "roc_auc_mean": 0.676,
+        "roc_auc_std": 0.0117,
+        "accuracy_mean": 0.6308,
+        "accuracy_std": 0.0096,
+        "runtime_sec_mean": 0.23,
+        "param_count": 54
+      },
+      "vanilla_dkt": {
+        "log_loss_mean": 0.6453,
+        "log_loss_std": 0.0063,
+        "brier_score_mean": 0.2269,
+        "brier_score_std": 0.003,
+        "roc_auc_mean": 0.6745,
+        "roc_auc_std": 0.0118,
+        "accuracy_mean": 0.6294,
+        "accuracy_std": 0.0088,
+        "runtime_sec_mean": 20.1,
+        "param_count": 13273
+      },
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.6458,
+        "log_loss_std": 0.0054,
+        "brier_score_mean": 0.2271,
+        "brier_score_std": 0.0026,
+        "roc_auc_mean": 0.6748,
+        "roc_auc_std": 0.0108,
+        "accuracy_mean": 0.6288,
+        "accuracy_std": 0.0065,
+        "runtime_sec_mean": 18.2,
+        "param_count": 13273
+      }
+    }
+  },
+  "temporal_dynamics": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.588,
+        "log_loss_std": 0.0052,
+        "brier_score_mean": 0.201,
+        "brier_score_std": 0.0024,
+        "roc_auc_mean": 0.6758,
+        "roc_auc_std": 0.0024,
+        "accuracy_mean": 0.6888,
+        "accuracy_std": 0.0069,
+        "runtime_sec_mean": 0.22,
+        "param_count": 54
+      },
+      "vanilla_dkt": {
+        "log_loss_mean": 0.5898,
+        "log_loss_std": 0.0051,
+        "brier_score_mean": 0.2017,
+        "brier_score_std": 0.0023,
+        "roc_auc_mean": 0.6722,
+        "roc_auc_std": 0.0009,
+        "accuracy_mean": 0.6875,
+        "accuracy_std": 0.009,
+        "runtime_sec_mean": 32.7,
+        "param_count": 13273
+      },
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.5889,
+        "log_loss_std": 0.0052,
+        "brier_score_mean": 0.2014,
+        "brier_score_std": 0.0023,
+        "roc_auc_mean": 0.6738,
+        "roc_auc_std": 0.0007,
+        "accuracy_mean": 0.6876,
+        "accuracy_std": 0.0047,
+        "runtime_sec_mean": 21.69,
+        "param_count": 13273
+      }
+    }
+  },
+  "distribution_shift": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.5867,
+        "log_loss_std": 0.0147,
+        "brier_score_mean": 0.2006,
+        "brier_score_std": 0.0065,
+        "roc_auc_mean": 0.6595,
+        "roc_auc_std": 0.0057,
+        "accuracy_mean": 0.6912,
+        "accuracy_std": 0.0128,
+        "runtime_sec_mean": 0.23,
+        "param_count": 54
+      },
+      "vanilla_dkt": {
+        "log_loss_mean": 0.5957,
+        "log_loss_std": 0.016,
+        "brier_score_mean": 0.205,
+        "brier_score_std": 0.0072,
+        "roc_auc_mean": 0.6574,
+        "roc_auc_std": 0.0032,
+        "accuracy_mean": 0.6702,
+        "accuracy_std": 0.0182,
+        "runtime_sec_mean": 25.52,
+        "param_count": 13273
+      },
+      "reliability_gated_dkt": {
+        "log_loss_mean": 0.6059,
+        "log_loss_std": 0.018,
+        "brier_score_mean": 0.2095,
+        "brier_score_std": 0.0083,
+        "roc_auc_mean": 0.6583,
+        "roc_auc_std": 0.0023,
+        "accuracy_mean": 0.6555,
+        "accuracy_std": 0.0276,
+        "runtime_sec_mean": 27.99,
+        "param_count": 13273
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+scenarios:
+  base_heterogeneous:
+    description: "Standard heterogeneous learners with varied initial mastery, moderate learning rates, realistic inter-session gaps, and mild sensor noise."
+    initial_mastery_mean: 0.45
+    initial_mastery_std: 0.18
+    learning_rate_mean: 0.08
+    learning_rate_std: 0.03
+    forgetting_rate_mean: 0.02
+    forgetting_rate_std: 0.01
+    corruption_multiplier: 1.0
+    modality_dropout_rate: 0.05
+    uncertainty_bias: 0.00
+    uncertainty_noise_scale: 0.04
+    session_gap_prob: 0.15 # probability an event starts a new session (hours/days later)
+    max_gap_hours: 48.0
+    evaluation_type: "in_distribution"
+
+  reliability_stress:
+    description: "Stress scenario with elevated physical corruption (motor slips, acoustic interference), frequent sensor missingness, and biased uncertainty calibration."
+    initial_mastery_mean: 0.50
+    initial_mastery_std: 0.16
+    learning_rate_mean: 0.08
+    learning_rate_std: 0.03
+    forgetting_rate_mean: 0.02
+    forgetting_rate_std: 0.01
+    corruption_multiplier: 2.5
+    modality_dropout_rate: 0.25 # high missing modality rate
+    uncertainty_bias: 0.08 # positive bias (under-estimating true noise)
+    uncertainty_noise_scale: 0.10 # high miscalibration noise
+    session_gap_prob: 0.15
+    max_gap_hours: 48.0
+    evaluation_type: "in_distribution"
+
+  simple_dynamics:
+    description: "Near-stationary scenario with very low learning and forgetting rates; outcome is dominated by task difficulty and baseline ability, making logistic regression highly competitive."
+    initial_mastery_mean: 0.50
+    initial_mastery_std: 0.20
+    learning_rate_mean: 0.01 # minimal progression
+    learning_rate_std: 0.005
+    forgetting_rate_mean: 0.002
+    forgetting_rate_std: 0.001
+    corruption_multiplier: 0.6 # low noise
+    modality_dropout_rate: 0.02
+    uncertainty_bias: 0.00
+    uncertainty_noise_scale: 0.02
+    session_gap_prob: 0.10
+    max_gap_hours: 24.0
+    evaluation_type: "in_distribution"
+
+  temporal_dynamics:
+    description: "Strong temporal dynamics with fast skill acquisition, pronounced forgetting over session gaps, and order-dependent mastery trajectories favoring sequence models."
+    initial_mastery_mean: 0.30
+    initial_mastery_std: 0.15
+    learning_rate_mean: 0.16 # rapid learning
+    learning_rate_std: 0.05
+    forgetting_rate_mean: 0.07 # pronounced forgetting
+    forgetting_rate_std: 0.02
+    corruption_multiplier: 1.1
+    modality_dropout_rate: 0.06
+    uncertainty_bias: 0.01
+    uncertainty_noise_scale: 0.04
+    session_gap_prob: 0.25 # frequent session gaps
+    max_gap_hours: 72.0
+    evaluation_type: "in_distribution"
+
+  distribution_shift:
+    description: "Train on standard learner parameter distribution, but test on a severely shifted population (lower baseline mastery, higher corruption, and faster forgetting)."
+    train_params:
+      initial_mastery_mean: 0.55
+      initial_mastery_std: 0.15
+      learning_rate_mean: 0.09
+      learning_rate_std: 0.03
+      forgetting_rate_mean: 0.02
+      forgetting_rate_std: 0.01
+      corruption_multiplier: 0.8
+      modality_dropout_rate: 0.04
+      uncertainty_bias: 0.00
+      uncertainty_noise_scale: 0.03
+      session_gap_prob: 0.15
+      max_gap_hours: 48.0
+    test_params:
+      initial_mastery_mean: 0.25 # noticeably lower initial mastery
+      initial_mastery_std: 0.12
+      learning_rate_mean: 0.04 # slower learning
+      learning_rate_std: 0.02
+      forgetting_rate_mean: 0.06 # higher forgetting
+      forgetting_rate_std: 0.02
+      corruption_multiplier: 2.2 # noticeably higher corruption
+      modality_dropout_rate: 0.20
+      uncertainty_bias: 0.07
+      uncertainty_noise_scale: 0.08
+      session_gap_prob: 0.20
+      max_gap_hours: 72.0
+    evaluation_type: "distribution_shift"

@@ -1,0 +1,2 @@
+scenario,seed,model,runtime_sec,param_count,log_loss,brier_score,roc_auc,accuracy,balanced_accuracy,ece,test_events,test_learners
+simple_dynamics,101,logistic_baseline,0.022,54,0.6574,0.2314,0.6631,0.6259,0.6251,0.0802,270,9

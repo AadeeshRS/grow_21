@@ -1,0 +1,674 @@
+[
+  {
+    "original_path": "GROW21_BENCHMARK_AUDIT_PHASE_2_PROMPT.md",
+    "planned_action": "archive",
+    "final_path": "outputs/archive/project_cleanup/obsolete_prompts/GROW21_BENCHMARK_AUDIT_PHASE_2_PROMPT.md",
+    "size_bytes": 12028,
+    "sha256": "083ad046c1a78ac9e32f3854698cf2069124997ba28eb79d5f48460b4950fbd3",
+    "reason": "Historical prompt instruction, archived for provenance"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/configs/default.yaml",
+    "planned_action": "move",
+    "final_path": "configs/default.yaml",
+    "size_bytes": 5099,
+    "sha256": "1e8281d47a11d3d46ffd4d96cbe97387749635c873df3ac3828655ebdb6fa67d",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/configs/scenarios.yaml",
+    "planned_action": "move",
+    "final_path": "configs/scenarios.yaml",
+    "size_bytes": 3786,
+    "sha256": "d1b557818066ae4ab4acee8f8a0b2570150cdb6cfae3cb9d26a039f2c08194f3",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/BUNDLE_INDEX.md",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/BUNDLE_INDEX.md",
+    "size_bytes": 5796,
+    "sha256": "fc73da68a7e2d7f3cbe3f3dbb9f7173114e0097910aff544ac157eb46b9b992e",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/calibration_bins.csv",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/calibration_bins.csv",
+    "size_bytes": 32282,
+    "sha256": "859d815d1e708b1d07b24c1c02be255e4185bfc01a67951ee1fdcd2d6bdcd31b",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/CHANGELOG_PHASE_2.md",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/CHANGELOG_PHASE_2.md",
+    "size_bytes": 4642,
+    "sha256": "ff0966627f2e88d97efd6a9625f72dd31378dcef509eb04003caa3e2a6fb0b1f",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/Grow21_Phase_2_Audit_Evidence.zip",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/Grow21_Phase_2_Audit_Evidence.zip",
+    "size_bytes": 1028649,
+    "sha256": "891089f1791a2a340522ff358b916683249d48ec758d956a003072cc272b7572",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/PHASE_2_AUDIT_REPORT.md",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/PHASE_2_AUDIT_REPORT.md",
+    "size_bytes": 20846,
+    "sha256": "bfa8537b2b6a3e267d37973511d0ba8017ea4d67f620c7a7e434e95a6abc8eaa",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/reliability_sweep_summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/reliability_sweep_summary.json",
+    "size_bytes": 2961,
+    "sha256": "bf9747c35b1f09504320608b35bfdf07f53af3c04ab1f9c9ee60f8c6ead24ab4",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/audit/REPRODUCE.md",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/audit/REPRODUCE.md",
+    "size_bytes": 2764,
+    "sha256": "6c04d77b1458cfe24a1aff5b78bc562989a5007506315e6deddf6ee5b051e2be",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/closed_loop_events.csv",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/closed_loop_events.csv",
+    "size_bytes": 811092,
+    "sha256": "a3f94fa7ca1f4190564297071f9d691c5c81c16489ea8f04ec0a17e31fed98bb",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/closed_loop_summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/closed_loop_summary.json",
+    "size_bytes": 1756,
+    "sha256": "91cb647e5c659bd8a78ca627a047b6481a77d6819751f9e5a13c96fbbaf9612c",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/manifest.json",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/manifest.json",
+    "size_bytes": 7708,
+    "sha256": "6932ebcfff284e6612af147016e838f8762ff741b79fa4ecb1804660a0d48ff0",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/metrics.csv",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/metrics.csv",
+    "size_bytes": 4686,
+    "sha256": "5d1c6383914dc7d956d75b7bf3182f49be9f8c1d0221898419cea9370eb23d63",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/calibration_base_heterogeneous.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/calibration_base_heterogeneous.png",
+    "size_bytes": 141676,
+    "sha256": "7c7a6cc0679549c99663f568b5aad48b0bb533f3e965db0a8c764857685cdbef",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/calibration_distribution_shift.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/calibration_distribution_shift.png",
+    "size_bytes": 152359,
+    "sha256": "bcc4464cb9673365fe8fefd3e461852a95f56097d5a6915e87981f08f0dfee10",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/calibration_reliability_stress.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/calibration_reliability_stress.png",
+    "size_bytes": 131682,
+    "sha256": "b2ac47465eb71cc66ed073bb5f2ca071143ca7ebe1be3d21303cbe4177a0a1b3",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/calibration_simple_dynamics.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/calibration_simple_dynamics.png",
+    "size_bytes": 136151,
+    "sha256": "46c33fefc44a79ca3d031a668c9922160d7583688327db40d212e9ef4cb8ebad",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/calibration_temporal_dynamics.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/calibration_temporal_dynamics.png",
+    "size_bytes": 139897,
+    "sha256": "3640cf49b4db342dad167944247ce440487c36d71adabc51dcb6999b26db3013",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/closed_loop_comparison.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/closed_loop_comparison.png",
+    "size_bytes": 109932,
+    "sha256": "f56373b1f567e42a4f9ceadb2a8afc0ee6fa3e0392d41abc15749b5f840ec6fb",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/plots/scenario_comparison.png",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/plots/scenario_comparison.png",
+    "size_bytes": 150123,
+    "sha256": "d78df81562ee8369210d205349dedef57b1a091f92e6eb8db429ccd5a48fd445",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/summary.json",
+    "size_bytes": 5905,
+    "sha256": "17d2ddb219a7968c0470cf18bcd2c7911a219504d9ab1de29eda21da993bf738",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/archive/pre_correction_pass/synthetic_smoke.csv",
+    "planned_action": "move",
+    "final_path": "outputs/archive/pre_correction_pass/synthetic_smoke.csv",
+    "size_bytes": 182572,
+    "sha256": "b13f1d387896388e5a70d99b2d1a5bfc79266732abdb25d9d273227a0092307d",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/BUNDLE_INDEX.md",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/BUNDLE_INDEX.md",
+    "size_bytes": 8722,
+    "sha256": "d8149f5ba689b59538417f90d27e5874d8361ec0734f68af3e6cf357bfa04e49",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/calibration_bins.csv",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/calibration_bins.csv",
+    "size_bytes": 55456,
+    "sha256": "64a26d83696565307e1d50c4281ac9a0cd282db5d1e898d17ae425d84017a1d4",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/CHANGELOG_PHASE_2.md",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/CHANGELOG_PHASE_2.md",
+    "size_bytes": 15565,
+    "sha256": "4530c7a24a573a18df519a23e22a238f12bca2de75cd6584710a05211140581f",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/Grow21_Phase_2_Audit_Evidence.zip",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/Grow21_Phase_2_Audit_Evidence.zip",
+    "size_bytes": 1314191,
+    "sha256": "4581a00ec0b361cebd584f3a74af7188e9af5bc00273a36d49a15d9f2099c2c4",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/learner_mastery_summary.csv",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/learner_mastery_summary.csv",
+    "size_bytes": 72333,
+    "sha256": "0d22bc97a0c2846eb02f61a340b6e8025ea3ff21704f7270ffccacd8d94e4104",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/paired_loss_evidence.csv",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/paired_loss_evidence.csv",
+    "size_bytes": 13094,
+    "sha256": "0be80f65fffd305bd0db83d4f0328ef7aa5d652a84fea297f2e7b5e8066c927f",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/PHASE_2_AUDIT_REPORT.md",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/PHASE_2_AUDIT_REPORT.md",
+    "size_bytes": 36413,
+    "sha256": "90bb11f0a9a1011d764ecbfcfaf95c65b3eccc3f8de41ef738cbc86ca9ca4085",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/predictor_vs_simulator_comparison.csv",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/predictor_vs_simulator_comparison.csv",
+    "size_bytes": 8416,
+    "sha256": "dc83f17205a1a0dda24f2ca4a5a21469541c8a91bf78219b20f178097e3319c7",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/reliability_sweep_summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/reliability_sweep_summary.json",
+    "size_bytes": 4141,
+    "sha256": "48e63f3e527e33a0e566371d95151b37252ca28ea443230f36c5249d72ca8785",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/audit/phase_2/REPRODUCE.md",
+    "planned_action": "move",
+    "final_path": "outputs/audit/phase_2/REPRODUCE.md",
+    "size_bytes": 7531,
+    "sha256": "d51aec050a086a40b79a0162e4ff93fcb62baa760ed9ea83165dd0c9cb7ad83d",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/metrics.csv",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/metrics.csv",
+    "size_bytes": 4686,
+    "sha256": "5d1c6383914dc7d956d75b7bf3182f49be9f8c1d0221898419cea9370eb23d63",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/calibration_base_heterogeneous.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/calibration_base_heterogeneous.png",
+    "size_bytes": 141676,
+    "sha256": "7c7a6cc0679549c99663f568b5aad48b0bb533f3e965db0a8c764857685cdbef",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/calibration_distribution_shift.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/calibration_distribution_shift.png",
+    "size_bytes": 152359,
+    "sha256": "bcc4464cb9673365fe8fefd3e461852a95f56097d5a6915e87981f08f0dfee10",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/calibration_reliability_stress.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/calibration_reliability_stress.png",
+    "size_bytes": 131682,
+    "sha256": "b2ac47465eb71cc66ed073bb5f2ca071143ca7ebe1be3d21303cbe4177a0a1b3",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/calibration_simple_dynamics.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/calibration_simple_dynamics.png",
+    "size_bytes": 136151,
+    "sha256": "46c33fefc44a79ca3d031a668c9922160d7583688327db40d212e9ef4cb8ebad",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/calibration_temporal_dynamics.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/calibration_temporal_dynamics.png",
+    "size_bytes": 139897,
+    "sha256": "3640cf49b4db342dad167944247ce440487c36d71adabc51dcb6999b26db3013",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/plots/scenario_comparison.png",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/plots/scenario_comparison.png",
+    "size_bytes": 150123,
+    "sha256": "d78df81562ee8369210d205349dedef57b1a091f92e6eb8db429ccd5a48fd445",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/benchmark/summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/benchmark/summary.json",
+    "size_bytes": 5905,
+    "sha256": "17d2ddb219a7968c0470cf18bcd2c7911a219504d9ab1de29eda21da993bf738",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/closed_loop/closed_loop_events.csv",
+    "planned_action": "move",
+    "final_path": "outputs/closed_loop/closed_loop_events.csv",
+    "size_bytes": 1139155,
+    "sha256": "b867c78cb7f34f0e8847b8cb1331fd7cddb4dcd9719322db7969614fed4c9620",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/closed_loop/closed_loop_summary.json",
+    "planned_action": "move",
+    "final_path": "outputs/closed_loop/closed_loop_summary.json",
+    "size_bytes": 3146,
+    "sha256": "3f6e30f3c33acc3d0ceceb41d41feeb89980df0854fbf1cc0555fe521d3714b3",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/closed_loop/learner_mastery_summary.csv",
+    "planned_action": "move",
+    "final_path": "outputs/closed_loop/learner_mastery_summary.csv",
+    "size_bytes": 72333,
+    "sha256": "0d22bc97a0c2846eb02f61a340b6e8025ea3ff21704f7270ffccacd8d94e4104",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/closed_loop/plots/closed_loop_comparison.png",
+    "planned_action": "move",
+    "final_path": "outputs/closed_loop/plots/closed_loop_comparison.png",
+    "size_bytes": 113238,
+    "sha256": "41018277dc9a13dcfee489682d417f827311e8d78169f3bc1649e2729e049f44",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/outputs/closed_loop/plots/difficulty_trajectories.png",
+    "planned_action": "move",
+    "final_path": "outputs/closed_loop/plots/difficulty_trajectories.png",
+    "size_bytes": 244979,
+    "sha256": "8a75e5f562d1866de6403c926ac690194fe3325c9e7c6fad383c105a179536bf",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/PROJECT_STRUCTURE.md",
+    "planned_action": "move",
+    "final_path": "PROJECT_STRUCTURE.md",
+    "size_bytes": 6332,
+    "sha256": "be2e04eddea2dce462dd60515de25cebec37e4a93df8d2d86550d5f57f8ee994",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/pyproject.toml",
+    "planned_action": "move",
+    "final_path": "pyproject.toml",
+    "size_bytes": 660,
+    "sha256": "0e488ff018fe66595262c72617669ca782d9dff43d6b92855f64cce2ecf775f6",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/README.md",
+    "planned_action": "move",
+    "final_path": "README.md",
+    "size_bytes": 17411,
+    "sha256": "aafe267a721957ee4f2a1a6ccff9e1137ca165237692d6762fb90bcceaf4bd61",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/requirements.txt",
+    "planned_action": "move",
+    "final_path": "requirements.txt",
+    "size_bytes": 119,
+    "sha256": "5770ebe7976aafb123e6d83fe8c1b9a53cbd9971d2b1d9d6fa8d62bb00fa9fc0",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/__init__.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/__init__.py",
+    "size_bytes": 105,
+    "sha256": "0b3942d580734e729c8bb748c085615abf0a4dc64c4e882108b5a1d883b87274",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/audit_calibration_bins.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/audit_calibration_bins.py",
+    "size_bytes": 12286,
+    "sha256": "cd780552c2530323a45ff3b959340cc91ff9649f41d50584ffac2eefe75a3ca0",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/closed_loop.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/closed_loop.py",
+    "size_bytes": 26042,
+    "sha256": "9464c2abe88f940a46451e6dafcdf10bbb8261fbfddc65047519772aaec1a94c",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/dataset.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/dataset.py",
+    "size_bytes": 11448,
+    "sha256": "408e2f4fe7c1d9f83174a0790a43fe967635882ab70e644d7c97c797adfba720",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/evaluate.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/evaluate.py",
+    "size_bytes": 10232,
+    "sha256": "96ba2f182b69b60694d55bc219e451aff90a8c827e63b95db78d7a44bf36874e",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/features.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/features.py",
+    "size_bytes": 9067,
+    "sha256": "f8958ff9ad7a72967aa37a98100c1c70774fa000e6e6e888f9bd0d410df0d14b",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/generate_data.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/generate_data.py",
+    "size_bytes": 2662,
+    "sha256": "02a0a849a689563ac0de2fd231f4bec94b944790574ba09162af93a015681121",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/models/__init__.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/models/__init__.py",
+    "size_bytes": 272,
+    "sha256": "053aacd471674214ca50876658f8400313e2154411d047cc171803a959ef9fa9",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/models/dkt.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/models/dkt.py",
+    "size_bytes": 3814,
+    "sha256": "dfd89d30f0d8c30ec707d4acce4f794dbedbf1a1f59736f11f2e1b8c416140a6",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/models/logistic_baseline.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/models/logistic_baseline.py",
+    "size_bytes": 2640,
+    "sha256": "37a4a598dbf302262649259286224bff73808152a45dbac54081baa9d69ec077",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/models/reliability_gated_dkt.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/models/reliability_gated_dkt.py",
+    "size_bytes": 4416,
+    "sha256": "1d885bc2fde41c673f7fc7868d2a7661891b78f6dbee0303adf8b445f3a1c38b",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/paths.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/paths.py",
+    "size_bytes": 1107,
+    "sha256": "89e3e2c6009daf53f9814fed7560ba6b818fe55c1ae57e7dcfc62a051f1dae03",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/plots.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/plots.py",
+    "size_bytes": 4471,
+    "sha256": "67663ac83487f3755f6b1c4f7a105c1781f1a63d49a07c0610c9bf6ebaa5a1e6",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/reliability.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/reliability.py",
+    "size_bytes": 6012,
+    "sha256": "e0848639c07b7b35d34166b2f9c388bdfe6575d7bb679cc6021be97517978327",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/run_benchmark.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/run_benchmark.py",
+    "size_bytes": 9415,
+    "sha256": "5fa3a4a74b020b42be77d8fd8844ba476c2319121ebc8c5d81c08a6958e614f1",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/run_closed_loop.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/run_closed_loop.py",
+    "size_bytes": 11231,
+    "sha256": "0238975dea6fa3be8591d09a84955cbb22724e4cb5915738ad5294a3cd9ebbec",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/simulator.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/simulator.py",
+    "size_bytes": 11799,
+    "sha256": "cd4bb39e124587bd22a022205344b6e01d3d8927c60012917f83649b2ac8e1d7",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/tasks.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/tasks.py",
+    "size_bytes": 6696,
+    "sha256": "0db3f8730359e5feb173ae4647263016c8ca565dc3af94d07bdbd5c1b30c9399",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark/train.py",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark/train.py",
+    "size_bytes": 7401,
+    "sha256": "8b640e82c9e48aded1e72b1ea55ce702164c35fd0ab37781d2ecc08e58ff7e29",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark.egg-info/dependency_links.txt",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark.egg-info/dependency_links.txt",
+    "size_bytes": 1,
+    "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark.egg-info/PKG-INFO",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark.egg-info/PKG-INFO",
+    "size_bytes": 492,
+    "sha256": "9264d81837f4068f03da0fc56027ad0c50f226d7a56fe60d526b45f68a4ccc60",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark.egg-info/requires.txt",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark.egg-info/requires.txt",
+    "size_bytes": 119,
+    "sha256": "5770ebe7976aafb123e6d83fe8c1b9a53cbd9971d2b1d9d6fa8d62bb00fa9fc0",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark.egg-info/SOURCES.txt",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark.egg-info/SOURCES.txt",
+    "size_bytes": 602,
+    "sha256": "18edfcc163430900e001845801996e0c897cff50f412ad1a7881eface2e18b50",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/src/grow21_simulation_benchmark.egg-info/top_level.txt",
+    "planned_action": "move",
+    "final_path": "src/grow21_simulation_benchmark.egg-info/top_level.txt",
+    "size_bytes": 28,
+    "sha256": "701a7c33231cb934e64928b4d3f422d296e61dce22f154a6652ce3e44ae3c6e9",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/__init__.py",
+    "planned_action": "move",
+    "final_path": "tests/__init__.py",
+    "size_bytes": 65,
+    "sha256": "7073e7b8a59bdfe6ddaaede1c825520eec5c783db821e6cb69f4a022310a06f2",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_audit_regressions.py",
+    "planned_action": "move",
+    "final_path": "tests/test_audit_regressions.py",
+    "size_bytes": 21928,
+    "sha256": "97d7510340bd68300fb615200a1465da0fb63e468ff411b38a2264899359d73e",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_controller_constraints.py",
+    "planned_action": "move",
+    "final_path": "tests/test_controller_constraints.py",
+    "size_bytes": 4838,
+    "sha256": "5fefbdc871094dd7a71de0749a714c1f4337e766c4225f1f175df0bedcef90ab",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_documentation_integrity.py",
+    "planned_action": "move",
+    "final_path": "tests/test_documentation_integrity.py",
+    "size_bytes": 4500,
+    "sha256": "ed95a131ffecf16586f546532994ba115e0369b21b000b78eae9bedbb1a49206",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_model_shapes.py",
+    "planned_action": "move",
+    "final_path": "tests/test_model_shapes.py",
+    "size_bytes": 2363,
+    "sha256": "47c91957152c386af60ea123bc384a47ba57ddcc1538983417d532da6b1eae45",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_no_leakage.py",
+    "planned_action": "move",
+    "final_path": "tests/test_no_leakage.py",
+    "size_bytes": 5140,
+    "sha256": "6d68d479f4bd9bf01f2fccba62b2b4a3a289f5c7558b4ff6216796c208b43f42",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_reliability.py",
+    "planned_action": "move",
+    "final_path": "tests/test_reliability.py",
+    "size_bytes": 2954,
+    "sha256": "758485abfd03756001c8965acb63ab796714cbca49f97e68c96258e7c707304d",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark/tests/test_simulator.py",
+    "planned_action": "move",
+    "final_path": "tests/test_simulator.py",
+    "size_bytes": 4241,
+    "sha256": "9a476a2669f3f1da5201771a5d6df1400ce9511d6c01695e3077032eaa6322e7",
+    "reason": "Flatten nested project directory to outer repository root"
+  },
+  {
+    "original_path": "grow21_simulation_benchmark_artifacts.zip",
+    "planned_action": "archive",
+    "final_path": "outputs/archive/project_cleanup/original_input_bundle/grow21_simulation_benchmark_artifacts.zip",
+    "size_bytes": 916796,
+    "sha256": "e0e560b695784ba93751e792203dc7e085b994593c5e801c27dc7784b144d502",
+    "reason": "Original input bundle, archived under project cleanup"
+  },
+  {
+    "original_path": "GROW21_SIMULATOR_BENCHMARK_ANTIGRAVITY_PROMPT.md",
+    "planned_action": "archive",
+    "final_path": "outputs/archive/project_cleanup/obsolete_prompts/GROW21_SIMULATOR_BENCHMARK_ANTIGRAVITY_PROMPT.md",
+    "size_bytes": 16747,
+    "sha256": "b8b5a56578221a5f0495e9d5c08289ab13fc25864c8a9b53ccda6c70ba2d3e1b",
+    "reason": "Historical prompt instruction, archived for provenance"
+  }
+]

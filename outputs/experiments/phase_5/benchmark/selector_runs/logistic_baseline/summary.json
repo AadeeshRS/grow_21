@@ -1,0 +1,18 @@
+{
+  "simple_dynamics": {
+    "models": {
+      "logistic_baseline": {
+        "log_loss_mean": 0.6574,
+        "log_loss_std": 0.0,
+        "brier_score_mean": 0.2314,
+        "brier_score_std": 0.0,
+        "roc_auc_mean": 0.6631,
+        "roc_auc_std": 0.0,
+        "accuracy_mean": 0.6259,
+        "accuracy_std": 0.0,
+        "runtime_sec_mean": 0.02,
+        "param_count": 54
+      }
+    }
+  }
+}

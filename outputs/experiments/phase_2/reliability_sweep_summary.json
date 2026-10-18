@@ -1,0 +1,146 @@
+{
+  "level_1_accurate": {
+    "description": "Composite stress Level 1: Accurately estimated reliability (low noise, zero bias, no sensor dropouts; corruption_multiplier=1.2)",
+    "vanilla_dkt": {
+      "log_loss": 0.6322,
+      "brier_score": 0.2211,
+      "roc_auc": 0.6532,
+      "ece": 0.0158
+    },
+    "reliability_gated_dkt": {
+      "log_loss": 0.6332,
+      "brier_score": 0.2213,
+      "roc_auc": 0.6546,
+      "ece": 0.0227
+    },
+    "logistic_baseline": {
+      "log_loss": 0.6345,
+      "brier_score": 0.222,
+      "roc_auc": 0.6535,
+      "ece": 0.0321
+    },
+    "paired_difference_gated_minus_vanilla": {
+      "mean_diff": 0.001,
+      "ci_95": [
+        -0.0015,
+        0.0037
+      ],
+      "favors": "vanilla_dkt",
+      "statistically_significant_at_alpha_0_05": false
+    },
+    "bootstrap_settings": {
+      "resampling_unit": "learner_clusters",
+      "num_replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  },
+  "level_2_noisy": {
+    "description": "Composite stress Level 2: Noisy reliability estimates (zero bias, high estimation noise sigma=0.15; corruption_multiplier=1.5)",
+    "vanilla_dkt": {
+      "log_loss": 0.6289,
+      "brier_score": 0.2193,
+      "roc_auc": 0.6685,
+      "ece": 0.0357
+    },
+    "reliability_gated_dkt": {
+      "log_loss": 0.6269,
+      "brier_score": 0.2184,
+      "roc_auc": 0.6701,
+      "ece": 0.0307
+    },
+    "logistic_baseline": {
+      "log_loss": 0.6288,
+      "brier_score": 0.2191,
+      "roc_auc": 0.6692,
+      "ece": 0.0349
+    },
+    "paired_difference_gated_minus_vanilla": {
+      "mean_diff": -0.002,
+      "ci_95": [
+        -0.004,
+        0.0001
+      ],
+      "favors": "reliability_gated_dkt",
+      "statistically_significant_at_alpha_0_05": false
+    },
+    "bootstrap_settings": {
+      "resampling_unit": "learner_clusters",
+      "num_replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  },
+  "level_3_miscalibrated": {
+    "description": "Composite stress Level 3: Systematically miscalibrated reliability (positive corruption bias=+0.12, over-estimating corruption noise / under-estimating reliability; corruption_multiplier=1.8)",
+    "vanilla_dkt": {
+      "log_loss": 0.6142,
+      "brier_score": 0.2128,
+      "roc_auc": 0.655,
+      "ece": 0.0069
+    },
+    "reliability_gated_dkt": {
+      "log_loss": 0.6112,
+      "brier_score": 0.2116,
+      "roc_auc": 0.6614,
+      "ece": 0.0146
+    },
+    "logistic_baseline": {
+      "log_loss": 0.6096,
+      "brier_score": 0.2108,
+      "roc_auc": 0.6649,
+      "ece": 0.0196
+    },
+    "paired_difference_gated_minus_vanilla": {
+      "mean_diff": -0.003,
+      "ci_95": [
+        -0.0061,
+        0.0005
+      ],
+      "favors": "reliability_gated_dkt",
+      "statistically_significant_at_alpha_0_05": false
+    },
+    "bootstrap_settings": {
+      "resampling_unit": "learner_clusters",
+      "num_replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  },
+  "level_4_missing_modalities": {
+    "description": "Composite stress Level 4: High missing modality rate (35% sensor dropouts requiring conservative uncertainty penalty; corruption_multiplier=1.8)",
+    "vanilla_dkt": {
+      "log_loss": 0.6073,
+      "brier_score": 0.2096,
+      "roc_auc": 0.6646,
+      "ece": 0.0429
+    },
+    "reliability_gated_dkt": {
+      "log_loss": 0.6019,
+      "brier_score": 0.2068,
+      "roc_auc": 0.6692,
+      "ece": 0.0292
+    },
+    "logistic_baseline": {
+      "log_loss": 0.6003,
+      "brier_score": 0.2062,
+      "roc_auc": 0.6712,
+      "ece": 0.016
+    },
+    "paired_difference_gated_minus_vanilla": {
+      "mean_diff": -0.0054,
+      "ci_95": [
+        -0.0088,
+        -0.002
+      ],
+      "favors": "reliability_gated_dkt",
+      "statistically_significant_at_alpha_0_05": true
+    },
+    "bootstrap_settings": {
+      "resampling_unit": "learner_clusters",
+      "num_replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  }
+}
