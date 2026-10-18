@@ -147,21 +147,21 @@ Error body: `{"error": {"code": "...", "message": "...", "details"?: [...]}}`.
 
 Source: `configs/default.yaml` (backend) and `src/games.ts` / `src/GameTask.tsx` (frontend).
 
-| Game | Frontend key → config ID | Primary skill | Secondary skill | Observations the current UI can produce | Frontend ψ_g(D) parameters | Status |
+| Game | Frontend key → config ID | Primary skill | Secondary skill | What an attempt measures (sent as attempt telemetry) | Frontend ψ_g(D) parameters | Status |
 |---|---|---|---|---|---|---|
-| Trace & Glow | `trace` → `trace_glow` | fine_motor | visual_discrimination | per-attempt success/failure via buttons, latency, retries | pathWidthDp, pathLengthDp, curvature, turnCount, shapeType | Connected; generic placeholder UI |
-| Bubble Pop Brigade | `bubble` → `bubble_pop_brigade` | fine_motor | visual_discrimination | same | bubbleSizeDp, speedDpPerSec, concurrentBubbles, minSeparationDp | Connected; generic UI |
-| Block Stacker | `block` → `block_stacker` | fine_motor | sequential_reasoning | same | blockCount, blockSizeDp, placementToleranceDp, structure | Connected; generic UI |
-| Echo Safari | `echo` → `echo_safari` | phonological_awareness | working_memory | same; **no VAD/microphone capture exists** | promptVariety, repetitions, responseWindowMs, demand | Connected; generic UI |
-| Picture-Sentence Strips | `sentence` → `picture_sentence_strips` | sequential_reasoning | categorization | same | sentenceLength, vocabLevel, distractorCount, structureType | Connected; generic UI |
-| Audio Search | `audio` → `audio_search` | working_memory | phonological_awareness | same (no child ASR, as designed) | optionCount, visualSimilarity, attributeCount, instructionComplexity | Connected; generic UI |
-| Category Sorting | `sort` → `category_sorting` | categorization | visual_discrimination | same; no drag/placement telemetry | itemCount, categoryCount, categorySimilarity, attributeComplexity, placementToleranceDp | Connected; generic UI |
-| Visual Flip Match | `flip` → `visual_flip_match` | working_memory | visual_discrimination | same | cardCount, visualSimilarity, exposureMs, loadLevel | Connected; generic UI |
-| Pattern Train | `pattern` → `pattern_train` | sequential_reasoning | visual_discrimination | same | sequenceLength, ruleCount, distractorCount, visualSimilarity | Connected; generic UI |
+| Trace & Glow | `trace` → `trace_glow` | fine_motor | visual_discrimination | path followed to the end; off-path exits, lifts, deviation | pathWidthDp, pathLengthDp, curvature, turnCount, shapeType | Playable (slide along an SVG path) |
+| Bubble Pop Brigade | `bubble` → `bubble_pop_brigade` | fine_motor | visual_discrimination | bubbles popped; consecutive empty-sky misses, miss distance | bubbleSizeDp, speedDpPerSec, concurrentBubbles, minSeparationDp | Playable (tap rising bubbles) |
+| Block Stacker | `block` → `block_stacker` | fine_motor | sequential_reasoning | all blocks placed; release misses, wrong targets, stacking-order errors | blockCount, blockSizeDp, placementToleranceDp, structure | Playable (drag; tap-then-tap at help ≥ 2) |
+| Echo Safari | `echo` → `echo_safari` | phonological_awareness | working_memory | any detected vocalisation per prompt (web microphone), otherwise a grown-up's confirmation; no transcription | promptVariety, repetitions, responseWindowMs, demand | Playable (model sound → "Your turn!") |
+| Picture-Sentence Strips | `sentence` → `picture_sentence_strips` | sequential_reasoning | categorization | picture-words tapped in order; out-of-order taps | sentenceLength, vocabLevel, distractorCount, structureType | Playable (sentence read back) |
+| Audio Search | `audio` → `audio_search` | working_memory | phonological_awareness | the spoken object chosen (colour/size on the object); no child ASR | optionCount, visualSimilarity, attributeCount, instructionComplexity | Playable |
+| Category Sorting | `sort` → `category_sorting` | categorization | visual_discrimination | pictures sorted; classification errors and placement misses recorded separately | itemCount, categoryCount, categorySimilarity, attributeComplexity, placementToleranceDp | Playable (drag or tap a basket) |
+| Visual Flip Match | `flip` → `visual_flip_match` | working_memory | visual_discrimination | all pairs found after a preview; mismatches | cardCount, visualSimilarity, exposureMs, loadLevel | Playable |
+| Pattern Train | `pattern` → `pattern_train` | sequential_reasoning | visual_discrimination | the next picture in the pattern chosen | sequenceLength, ruleCount, distractorCount, visualSimilarity | Playable |
 
 Six configured skills are shared across games. For example, Trace, Bubble, and Block all update `fine_motor`, and evidence from one game moves the D recommended for the next (tested).
 
-**No game has a real renderer.** All nine use the same `GameTask` card with "Try again" / "I found it!" buttons; the frontend's `docs/OPEN_ITEMS.md` records this. Everything the UI can genuinely report is connected. Touch paths, drag, VAD, and affect signals do not exist yet, so they are not sent.
+**All nine games have playable boards** (frontend `src/boards/`; rules and help ladders in the frontend's `docs/GAME_DESIGN.md`). Each board decides an attempt's success or failure from the child's actual interaction. Per-attempt motor, speech and task details travel in `attempts[].motor/speech/task`; the backend logs them but the model uses only the first attempt's outcome. Raw touch paths, gaze and affect signals are not captured, so they are not sent.
 
 Skill-ID alignment: the frontend previously used nine per-game labels (`fine_motor_tracing`, …), none of which exist in the backend config. They were replaced with the six configured IDs in `src/types.ts` and `src/games.ts`. Game keys were **not** renamed; the backend maps them (`FRONTEND_GAME_KEYS`). Parity is checked by the live contract test (`/api/v1/config` against `SKILLS`).
 
@@ -211,8 +211,8 @@ Without the variable, the demo runs the development-only `MockEngine` and says s
 | Backend after integration | `python -m pytest -q tests` | **110 passed, 1 skipped** (37 new in `tests/test_service_api.py`; the same optional full-artifact test skipped) |
 | Frontend baseline | none existed; `tsc` failed on pre-existing type errors | — |
 | Frontend typecheck | `cd demo && npm run typecheck` | pass |
-| Frontend unit/UI | `cd demo && npm test` | **33 passed** |
-| Frontend ↔ live backend | `cd demo && GROW21_API_URL=http://127.0.0.1:8000 npm run test:integration` | **5 passed** (real module + `HttpEngineClient` + running uvicorn) |
+| Frontend unit/UI | `cd demo && npm test` | **47 passed** (every game played through real interactions, generators over 800 seed/difficulty/help combinations per game) |
+| Frontend ↔ live backend | `cd demo && GROW21_API_URL=http://127.0.0.1:8000 npm run test:integration` | **5 passed**. Real game boards + `HttpEngineClient` + running uvicorn: a trace success updates `fine_motor` before Bubble Pop's decision; missed bubbles, dropped blocks and a "Not yet" in Echo give three first-attempt failures and the backend's cooldown break |
 | Manual end-to-end | Expo web build in a browser against uvicorn | passed (see 5.1) |
 
 Integration scenarios and where they are tested:
@@ -234,19 +234,18 @@ Integration scenarios and where they are tested:
 
 ### 5.1 Manual end-to-end run (real UI, real backend)
 
-The Expo **web** build ran in a browser against uvicorn:
-- Trace & Glow appeared at the backend's D = 0.37 (pathWidthDp 92).
-- "I found it!" raised `fine_motor` from 0.454 to 0.506 and gave `visual_discrimination` a small transfer gain. The next task was Bubble Pop Brigade, which shares `fine_motor`.
-- Three tasks solved only after "Try again" produced a `frustration_cooldown` break, and the app exited with `break`.
-- "Start new session" received the break again (7195 s remaining) instead of bypassing the cooldown.
-- The UI's 4 telemetry submissions all returned 200. The server log showed no non-200 responses except the live suite's deliberate malformed-request check.
-
----
+The Expo **web** build ran in a browser against uvicorn (October 19, 2026, after the game boards were built):
+- From the home screen, **Play** started a backend session. Echo Safari, Picture-Sentence Strips, Audio Search, Category Sorting and Visual Flip Match were played through their real interactions, including a wrong Audio Search choice (gentle retry, then success), dragging *and* tapping in Category Sorting, and Flip Match mismatches.
+- Each success raised the star counter, and each task's telemetry was accepted by the backend.
+- After a learner reached three consecutive first-attempt failures, **Play** produced the backend's `frustration_cooldown` break. The rest screen showed the remaining cool-down for grown-ups, and holding 🔒 opened the grown-ups panel with live state from `/api/v1/learners/{id}/state`.
+- Trace & Glow, Bubble Pop and Block Stacker were also driven in the browser (pointer events along the drawn path, taps and drags): success, off-path failure and stacking order all behaved as specified.
+- Microphone capture is blocked in the review browser, so Echo Safari ran in its grown-up confirmation mode.
+- Layout audit: at 1880×950, 1280×800, 812×375 and 375×812 the page never scrolls and no element leaves the play surface.
 
 ## 6. Known limitations and unverified behaviour
 
 - **Not run on Android or iOS.** No emulator or device was available. Tests used the Jest React Native environment and the Expo web target. Native networking (emulator alias, cleartext policy, physical-device LAN access) is unverified.
-- **No real game renderers** (see section 3). The observation is whatever the button card records.
+- **Game boards are tested in Jest and the Expo web build only**, not on a device or with children. Echo Safari's microphone detection is web-only (native uses grown-up confirmation) and could not be exercised in the review browser.
 - **Not implemented in the backend, so not exposed:** frustration proxy F_t, latency-based fatigue B_t, active-time and daily-time break limits (b_active, b_day), the mastery→scaffold mapping, the skill-priority scheduler (eq. 29–30), baseline initialisation, motor-slip and ASR reliability models, plateau and confirmation policies, and caregiver feedback. Caregiver reports stay a separate channel; `MasteryPriorInitializer` exists but is not wired to any endpoint.
 - **Math-document vs implementation discrepancies (unchanged, by design of earlier phases):** the documents specify DKT and p̂ = σ(logit θ − γD^ν) with γ = 3.5, ν = 2, D ∈ [0, 1], a step of 0.05, and a deadband of 0.05. The implemented, validated controller uses the canonical IRT model (Phase 3), D ∈ [0.08, 0.95], a step of 0.08, and a deadband of 0.04. The backend is followed.
 - **Engineering settings, not clinical guidance:** the 2-hour cooldown and 15-trial session limit come from the simulator configuration. They are enforced as configured and should be reviewed for real use.
