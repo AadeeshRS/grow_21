@@ -3,14 +3,37 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["node", "jest"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ],
     "paths": {
-      "react": ["./node_modules/@types/react"],
-      "react/*": ["./node_modules/@types/react/*"],
-      "react-native": ["./node_modules/react-native"],
-      "@testing-library/react-native": ["./node_modules/@testing-library/react-native"]
+      "react": [
+        "./node_modules/@types/react"
+      ],
+      "react/*": [
+        "./node_modules/@types/react/*"
+      ],
+      "react-native": [
+        "./node_modules/react-native"
+      ],
+      "@testing-library/react-native": [
+        "./node_modules/@testing-library/react-native"
+      ],
+      "react-native-svg": [
+        "./node_modules/react-native-svg"
+      ],
+      "expo-speech": [
+        "./node_modules/expo-speech"
+      ]
     }
   },
-  "include": ["App.tsx", "../src", "../tests"]
+  "include": [
+    "App.tsx",
+    "../src",
+    "../tests"
+  ]
 }

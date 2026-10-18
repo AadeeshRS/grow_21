@@ -6,7 +6,7 @@
 > **Status:** Published and Verified  
 > **Date:** October 2026  
 
-> **Update (integration branch `grow21-integration-ui`):** the per-game skill IDs in section C were replaced by the backend's six configured skills (see `src/games.ts`), and `HttpEngineClient` now exists. Section F was the plan; the implemented contract is in the backend's `docs/integration/FRONTEND_BACKEND_API.md`.
+> **Update (integration branch `grow21-integration-ui`):** the per-game skill IDs in section C were replaced by the backend's six configured skills (see `src/games.ts`), and `HttpEngineClient` now exists. Section F was the plan; the implemented contract is in the backend's `docs/integration/FRONTEND_BACKEND_API.md`. The generic `GameTask` card described below has since been replaced by nine playable boards (`docs/GAME_DESIGN.md`).
 
 ---
 

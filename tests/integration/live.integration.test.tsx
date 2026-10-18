@@ -1,14 +1,19 @@
 /**
- * Live contract tests: the real module + HttpEngineClient against a running Grow21 backend.
- * Run with: GROW21_API_URL=http://127.0.0.1:8000 npm run test:integration   (from demo/)
- * Fails (does not skip) when the backend is unreachable. Uses synthetic learners only.
+ * Live contract tests: the real module, real game boards and HttpEngineClient against a running
+ * Grow21 backend. Run from demo/:  GROW21_API_URL=http://127.0.0.1:8000 npm run test:integration
+ * Fails (does not skip) when the backend is unreachable. Synthetic learners only.
  */
 import React from 'react';
-import {act, fireEvent, render, screen, waitFor} from '@testing-library/react-native';
+import {render, screen} from '@testing-library/react-native';
 import {Grow21GameModule, HttpEngineClient} from '../../src';
 import {GAME_NAMES, SKILLS} from '../../src/games';
 import {MockHostBridge} from '../../src/MockHostBridge';
 import type {GameId} from '../../src/types';
+import {advance, failEcho, failMotor, layoutStage, solve, timing} from '../solvers';
+
+jest.mock('expo-speech', () => ({speak: jest.fn(), stop: jest.fn()}));
+jest.setTimeout(120000);
+timing.real = true;
 
 const API = process.env.GROW21_API_URL;
 if (!API) throw new Error('GROW21_API_URL must point at a running Grow21 backend');
@@ -26,10 +31,13 @@ function mount(childId: string, sessionId: string) {
   return {onExit, notify, view};
 }
 
-async function playCurrent(first: 'success' | 'failure') {
-  if (first === 'failure') fireEvent.press(screen.getByText('Try again'));
-  fireEvent.press(screen.getByText('I found it!'));
-  await act(async () => {});
+/** Waits for the backend-issued task to appear and returns what the backend says it issued. */
+async function current(child: string, expectGame: GameId) {
+  await screen.findByText(new RegExp(GAME_NAMES[expectGame].replace(/[&]/g, '\\$&')), {}, {timeout: 8000});
+  await layoutStage();
+  const st = (await getJson(`/api/v1/learners/${child}/state`)).body;
+  expect(st.lastDecision.gameId).toBe(expectGame);
+  return {taskId: st.outstandingTaskId as string, D: st.lastDecision.applied_difficulty as number, state: st};
 }
 
 describe('frontend ↔ backend contract (live)', () => {
@@ -40,68 +48,73 @@ describe('frontend ↔ backend contract (live)', () => {
     for (const gameId of Object.keys(GAME_NAMES) as GameId[]) expect(SKILLS[gameId]).toBe(body.games[gameId].primarySkill);
   });
 
-  it('plays tasks end to end, applies backend difficulty, shares skill state, and honours the cooldown break', async () => {
+  it('plays real games end to end: shared skill evidence, first-attempt failures, and the cooldown break', async () => {
     const child = unique('live');
     const {onExit, notify} = mount(child, 's1');
 
-    await screen.findByText('Trace & Glow', {}, {timeout: 5000});
-    let st = (await getJson(`/api/v1/learners/${child}/state`)).body;
-    expect(st.outstandingTaskId).toBeTruthy();
-    const traceD = st.lastDecision.applied_difficulty;
-    expect(st.gameDifficulty.trace).toBeCloseTo(traceD, 3);
+    // Trace & Glow solved on the first attempt: fine_motor evidence.
+    let t = await current(child, 'trace');
+    const before = t.state.mastery.fine_motor;
+    await solve('trace', t.taskId, t.D);
+    await advance(2500);
 
-    await playCurrent('success'); // trace, fine_motor
-    await screen.findByText('Bubble Pop Brigade', {}, {timeout: 5000});
-    st = (await getJson(`/api/v1/learners/${child}/state`)).body;
-    expect(st.observationsRecorded).toBe(1);
-    expect(st.mastery.fine_motor).toBeGreaterThan(0.4541); // shared skill updated by Trace & Glow evidence
-    expect(st.lastDecision.gameId).toBe('bubble');
+    // Bubble Pop shares fine_motor: its difficulty decision already used the trace evidence.
+    t = await current(child, 'bubble');
+    expect(t.state.observationsRecorded).toBe(1);
+    expect(t.state.mastery.fine_motor).toBeGreaterThan(before);
+    await failMotor('bubble', t.taskId, t.D);  // four taps on empty sky: first attempt fails
+    await advance(1500);
+    await solve('bubble', t.taskId, t.D);       // solved on the retry
+    await advance(2500);
 
-    // Three tasks whose first attempt fails (even though later solved with help).
-    await playCurrent('failure');
-    await screen.findByText('Block Stacker', {}, {timeout: 5000});
-    await playCurrent('failure');
-    await screen.findByText('Echo Safari', {}, {timeout: 5000});
-    await playCurrent('failure');
+    t = await current(child, 'block');
+    expect(t.state.consecutiveFailures).toBe(1); // the first attempt is the observation
+    await failMotor('block', t.taskId, t.D);
+    await advance(1500);
+    await solve('block', t.taskId, t.D);
+    await advance(2500);
 
-    await waitFor(() => expect(onExit).toHaveBeenCalledWith('break'), {timeout: 5000});
+    t = await current(child, 'echo');
+    expect(t.state.consecutiveFailures).toBe(2);
+    await failEcho();
+    await advance(1500);
+    await solve('echo', t.taskId, t.D);
+    await advance(2500);
+
+    for (let i = 0; i < 40 && !onExit.mock.calls.length; i++) await advance(250);
+    expect(onExit).toHaveBeenCalledWith('break');
     expect(notify).toHaveBeenCalledWith({reason: 'frustration_cooldown', lengthSec: expect.any(Number)});
-    st = (await getJson(`/api/v1/learners/${child}/state`)).body;
+    const st = (await getJson(`/api/v1/learners/${child}/state`)).body;
     expect(st).toMatchObject({observationsRecorded: 4, sessionTrialsObserved: 4, consecutiveFailures: 3, outstandingTaskId: null});
   });
 
   it('restores the outstanding task after the module is remounted with the same session', async () => {
     const child = unique('restore');
     const first = mount(child, 's1');
-    await screen.findByText('Trace & Glow', {}, {timeout: 5000});
-    const before = (await getJson(`/api/v1/learners/${child}/state`)).body;
+    const t = await current(child, 'trace');
     first.view.unmount();
-
     mount(child, 's1');
-    await screen.findByText('Trace & Glow', {}, {timeout: 5000});
-    const after = (await getJson(`/api/v1/learners/${child}/state`)).body;
-    expect(after.outstandingTaskId).toBe(before.outstandingTaskId);
-    expect(after.tasksIssued).toBe(1);
+    const again = await current(child, 'trace');
+    expect(again.taskId).toBe(t.taskId);
+    expect(again.state.tasksIssued).toBe(1);
   });
 
   it('keeps two learners isolated', async () => {
     const a = unique('iso-a');
     const b = unique('iso-b');
     const ma = mount(a, 's1');
-    await screen.findByText('Trace & Glow', {}, {timeout: 5000});
-    await playCurrent('failure');
-    await screen.findByText('Bubble Pop Brigade', {}, {timeout: 5000});
+    let t = await current(a, 'trace'); // a is issued a task but plays nothing
     ma.view.unmount();
 
     mount(b, 's1');
-    await screen.findByText('Trace & Glow', {}, {timeout: 5000});
-    await playCurrent('success');
-    await screen.findByText('Bubble Pop Brigade', {}, {timeout: 5000});
-
+    t = await current(b, 'trace');
+    await solve('trace', t.taskId, t.D);
+    await advance(2500);
+    await current(b, 'bubble');
     const sa = (await getJson(`/api/v1/learners/${a}/state`)).body;
     const sb = (await getJson(`/api/v1/learners/${b}/state`)).body;
-    expect(sa.consecutiveFailures).toBe(1);
-    expect(sb.consecutiveFailures).toBe(0);
+    expect(sa.observationsRecorded).toBe(0);
+    expect(sb.observationsRecorded).toBe(1);
     expect(sb.mastery.fine_motor).toBeGreaterThan(sa.mastery.fine_motor);
   });
 
@@ -111,3 +124,4 @@ describe('frontend ↔ backend contract (live)', () => {
     expect((await res.json()).error.code).toBe('invalid_request');
   });
 });
+
