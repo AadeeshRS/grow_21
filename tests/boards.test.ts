@@ -10,6 +10,7 @@ import {buildTracePath} from '../src/boards/TraceGlow';
 import {applyScaffold, difficultyConfig} from '../src/games';
 import type {GameId} from '../src/types';
 import {isVoice, rms} from '../src/voice';
+import {rankVoice} from '../src/speech';
 
 const LEVELS = [0, 1, 2, 3];
 const DS = [0, 0.25, 0.5, 0.75, 1];
@@ -134,5 +135,20 @@ describe('voice activity rule (any vocalisation counts)', () => {
     expect(isVoice([0.025, 0.025, 0.025], 0.01)).toBe(false); // below 3x a noisy room
     expect(isVoice([0.03, 0.03], 0.001)).toBe(false); // too short
     expect(rms([0.5, -0.5, 0.5, -0.5])).toBeCloseTo(0.5);
+  });
+});
+
+describe('device voice choice', () => {
+  it('prefers natural English voices and never picks robotic ones', () => {
+    const voices = [
+      {name: 'English (espeak)', language: 'en'},
+      {name: 'Microsoft Aria Online (Natural) - English (United States)', language: 'en-US'},
+      {name: 'Google US English', language: 'en-US'},
+      {name: 'Google Deutsch', language: 'de-DE'},
+    ];
+    const best = [...voices].sort((a, b) => rankVoice(b, 'en-IN') - rankVoice(a, 'en-IN'));
+    expect(best[0].name).toContain('Natural');
+    expect(best[best.length - 1].language).toBe('de-DE');
+    expect(rankVoice(voices[0], 'en-IN')).toBeLessThan(rankVoice(voices[2], 'en-IN'));
   });
 });

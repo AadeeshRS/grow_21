@@ -2,12 +2,15 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Animated, Easing, Modal, Platform, SafeAreaView, ScrollView, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import Svg, {Ellipse, Path} from 'react-native-svg';
 import {useFonts, Nunito_700Bold, Nunito_800ExtraBold, Nunito_900Black} from '@expo-google-fonts/nunito';
+import {configureSpeech} from '../src/speech';
 import {BigButton, fonts, Grow21GameModule, HoldButton, HttpEngineClient, Mascot, MockEngine, MockHostBridge, say, SKILLS, theme as colors, type GameId, type TaskDirective} from '../src';
 
 // Inlined by Expo at bundle time. Unset -> development-only MockEngine (labelled in the grown-ups panel).
 const API_URL = process.env.EXPO_PUBLIC_GROW21_API_URL;
 const CHILD_ID = process.env.EXPO_PUBLIC_GROW21_CHILD_ID || 'demo-child';
 const engine = API_URL ? new HttpEngineClient(API_URL) : undefined;
+// Neural voice from the learner service when available; the device voice is the fallback.
+configureSpeech({ttsUrl: API_URL ? `${API_URL.replace(/\/+$/, '')}/api/v1/tts` : undefined});
 const newSessionId = () => `session-${Date.now().toString(36)}`;
 
 /**
