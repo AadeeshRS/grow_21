@@ -64,4 +64,5 @@ evidence/phase_3/Grow21_Phase_3_Model_Alignment_Evidence.zip
 evidence/phase_4/Grow21_Phase_4_State_Estimation_Evidence.zip
 evidence/phase_5/Grow21_Phase_5_Evidence.zip
 
-
+# Downloaded neural TTS voice models (large; fetch with `python -m piper.download_voices en_US-lessac-high`)
+voices/

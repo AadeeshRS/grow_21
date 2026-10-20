@@ -456,3 +456,26 @@ def test_runtime_is_deterministic_for_identical_inputs():
         st = state(client)
         outs.append((st["mastery"], st["gameDifficulty"]))
     assert outs[0] == outs[1]
+
+
+# --------------------------------------------------------------------------- optional neural voice
+
+
+def test_tts_reports_unavailable_without_a_voice(tmp_path, runtime):
+    from grow21_simulation_benchmark.service.tts import NeuralVoice
+    c = TestClient(create_app(runtime, voice=NeuralVoice(tmp_path / "missing.onnx")))
+    r = c.get("/api/v1/tts", params={"text": "Find the red car."})
+    assert r.status_code == 404 and r.json()["error"]["code"] == "tts_unavailable"
+    assert c.get("/api/v1/tts", params={"text": ""}).status_code == 422
+
+
+def test_tts_returns_cached_wav_audio(runtime):
+    from grow21_simulation_benchmark.service.tts import NeuralVoice
+    voice = NeuralVoice()
+    if not voice.available:
+        pytest.skip("Piper voice not installed (optional: pip install -e .[tts] and download en_US-lessac-high)")
+    c = TestClient(create_app(runtime, voice=voice))
+    r = c.get("/api/v1/tts", params={"text": "Great job!"})
+    assert r.status_code == 200 and r.headers["content-type"] == "audio/wav"
+    assert r.content[:4] == b"RIFF" and len(r.content) > 5000
+    assert c.get("/api/v1/tts", params={"text": "Great   job!"}).content == r.content  # normalised and cached

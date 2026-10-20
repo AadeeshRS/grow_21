@@ -11,19 +11,21 @@ from __future__ import annotations
 import os
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 
 from .runtime import LearnerRuntime, RuntimeRejection
 from .schemas import NextTaskRequest, TaskDirective, TelemetryAck, TelemetryEvent
+from .tts import MAX_CHARS, NeuralVoice
 
 DEFAULT_CORS_ORIGIN_REGEX = r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
 
 
-def create_app(runtime: Optional[LearnerRuntime] = None) -> FastAPI:
+def create_app(runtime: Optional[LearnerRuntime] = None, voice: Optional[NeuralVoice] = None) -> FastAPI:
     runtime = runtime or LearnerRuntime.from_environment()
+    voice = voice or NeuralVoice()
     app = FastAPI(title="Grow21 learner service", version="1")
     # Native React Native requests are not subject to CORS; this only matters for the Expo web host.
     app.add_middleware(
@@ -60,6 +62,12 @@ def create_app(runtime: Optional[LearnerRuntime] = None) -> FastAPI:
     @app.post("/api/v1/telemetry/submit", response_model=TelemetryAck)
     def submit_telemetry(event: TelemetryEvent) -> Dict[str, Any]:
         return runtime.submit_telemetry(event.model_dump(exclude_none=True))
+
+    @app.get("/api/v1/tts")
+    def tts(text: str = Query(min_length=1, max_length=MAX_CHARS)) -> Response:
+        if not voice.available:
+            raise RuntimeRejection(404, "tts_unavailable", "No neural voice is installed; use the device voice.")
+        return Response(content=voice.synthesize(text), media_type="audio/wav", headers={"Cache-Control": "public, max-age=86400"})
 
     @app.get("/api/v1/learners/{child_id}/state")
     def learner_state(child_id: str) -> Dict[str, Any]:

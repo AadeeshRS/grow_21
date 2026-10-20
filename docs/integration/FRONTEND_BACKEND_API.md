@@ -77,6 +77,7 @@ Base URL from `EXPO_PUBLIC_GROW21_API_URL`. All bodies are JSON. Unknown fields 
 | `GET /api/v1/config` | Configured skills, the nine game mappings, difficulty bounds, and safety limits (used by the live contract test) |
 | `POST /api/v1/task/next` | `NextTaskRequest` → `TaskDirective` |
 | `POST /api/v1/telemetry/submit` | `TelemetryEvent` → `{ack, duplicate, observationApplied}` |
+| `GET /api/v1/tts?text=…` | Optional neural voice (Piper, offline): WAV audio for an instruction, cached; 404 `tts_unavailable` when no voice is installed, so the app uses the device voice |
 | `GET /api/v1/learners/{childId}/state` | Current mastery estimates, per-game D, session counters, last controller decision (inspection and testing) |
 
 ### 2.1 `NextTaskRequest` (frontend `src/types.ts`)
@@ -181,6 +182,7 @@ Environment variables:
 |---|---|---|
 | `GROW21_CONFIG` | `configs/default.yaml` | model configuration |
 | `GROW21_STATE_DIR` | unset (in-memory) | persist learner state across restarts |
+| `GROW21_TTS_VOICE` | `voices/en_US-lessac-high.onnx` | Piper voice model for `/api/v1/tts` (install with `pip install -e .[tts]`, then `cd voices && python -m piper.download_voices en_US-lessac-high`) |
 | `GROW21_CORS_ORIGIN_REGEX` | `^https?://(localhost\|127\.0\.0\.1)(:\d+)?$` | allowed browser origins (only the Expo web host needs CORS) |
 
 The service has **no authentication**. Run it only on a trusted development machine or LAN.
