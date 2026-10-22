@@ -479,3 +479,15 @@ def test_tts_returns_cached_wav_audio(runtime):
     assert r.status_code == 200 and r.headers["content-type"] == "audio/wav"
     assert r.content[:4] == b"RIFF" and len(r.content) > 5000
     assert c.get("/api/v1/tts", params={"text": "Great   job!"}).content == r.content  # normalised and cached
+
+
+def test_demo_switch_removes_the_cooldown_pause_but_keeps_the_safety_drop(monkeypatch, clock):
+    monkeypatch.setenv("GROW21_DISABLE_COOLDOWN", "1")
+    rt = LearnerRuntime.from_environment()
+    rt.clock = clock
+    c = TestClient(create_app(rt))
+    for _ in range(3):
+        play(c, outcome="failure")
+    task = get_task(c)  # no break directive
+    assert state(c)["lastDecision"]["safety_intervention"] is True
+    assert task["D"] == pytest.approx(0.2, abs=1e-3)

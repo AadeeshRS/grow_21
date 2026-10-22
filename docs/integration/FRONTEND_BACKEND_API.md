@@ -183,6 +183,7 @@ Environment variables:
 | `GROW21_CONFIG` | `configs/default.yaml` | model configuration |
 | `GROW21_STATE_DIR` | unset (in-memory) | persist learner state across restarts |
 | `GROW21_TTS_VOICE` | `voices/en_US-lessac-high.onnx` | Piper voice model for `/api/v1/tts` (install with `pip install -e .[tts]`, then `cd voices && python -m piper.download_voices en_US-lessac-high`) |
+| `GROW21_DISABLE_COOLDOWN` | unset | Demo only: `1` removes the frustration rest pause (the safety difficulty drop still applies) |
 | `GROW21_CORS_ORIGIN_REGEX` | `^https?://(localhost\|127\.0\.0\.1)(:\d+)?$` | allowed browser origins (only the Expo web host needs CORS) |
 
 The service has **no authentication**. Run it only on a trusted development machine or LAN.

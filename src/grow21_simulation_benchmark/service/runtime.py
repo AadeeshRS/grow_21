@@ -109,6 +109,9 @@ class LearnerRuntime:
         config_path = Path(os.environ.get("GROW21_CONFIG", str(DEFAULT_CONFIG_PATH)))
         with open(config_path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
+        if os.environ.get("GROW21_DISABLE_COOLDOWN") == "1":
+            # Demo switch: no rest pause after a tricky run. The safety difficulty drop still applies.
+            config["controllers"]["target_adaptive"]["cooldown_gap_hours"] = 0.0
         state_dir = os.environ.get("GROW21_STATE_DIR") or None
         return cls(config, state_dir=Path(state_dir) if state_dir else None)
 
