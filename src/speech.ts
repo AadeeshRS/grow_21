@@ -16,6 +16,10 @@ let enabled = true;
 let ttsUrl: string | undefined;
 let deviceVoice: string | undefined;
 let current: {pause(): void; src: string} | null = null;
+/** Guards against the same line being spoken twice. React StrictMode runs effects
+ *  twice in development, which otherwise makes every instruction stutter. */
+let lastSpoken = {text: '', at: 0};
+const REPEAT_GUARD_MS = 1200;
 
 export function configureSpeech(options: {language?: string; enabled?: boolean; ttsUrl?: string}) {
   if (options.language) language = options.language;
@@ -59,13 +63,21 @@ function speakDevice(text: string, onDone?: () => void) {
 
 export function say(text: string, onDone?: () => void) {
   if (!enabled) { onDone?.(); return; }
+  const now = Date.now();
+  if (text === lastSpoken.text && now - lastSpoken.at < REPEAT_GUARD_MS) { onDone?.(); return; }
+  lastSpoken = {text, at: now};
   stopSpeaking();
   const AudioCtor = (globalThis as {Audio?: new (src: string) => HTMLAudioElement}).Audio;
   if (Platform.OS === 'web' && ttsUrl && AudioCtor) {
     const audio = new AudioCtor(`${ttsUrl}?text=${encodeURIComponent(text)}`);
     let settled = false;
     const done = () => { if (!settled) { settled = true; onDone?.(); } };
-    const fallback = () => { if (!settled && current === audio) { current = null; speakDevice(text, done); } };
+    const fallback = () => {
+      if (settled || current !== audio) return;
+      try { audio.pause(); } catch { /* already stopped */ }
+      current = null;
+      speakDevice(text, done);
+    };
     audio.onended = done;
     audio.onerror = fallback;
     current = audio;
@@ -75,7 +87,29 @@ export function say(text: string, onDone?: () => void) {
   speakDevice(text, onDone);
 }
 
+/**
+ * Speaks a line, then runs `after` once it has actually finished.
+ *
+ * Screen changes used to be on a fixed timer, so a line longer than the timer
+ * was cut off halfway. `minMs` keeps a short line on screen long enough to read,
+ * `maxMs` stops a stuck voice from blocking play.
+ */
+export function sayThen(text: string, after: () => void, minMs = 900, maxMs?: number) {
+  // Without a cap a silent or stuck voice would freeze the screen, but a fixed
+  // cap cuts long lines off, which is the bug this replaced. So the cap is read
+  // from the line itself: roughly how long it takes to say, plus a little slack.
+  const words = text.trim().split(/\s+/).length;
+  const cap = maxMs ?? Math.max(minMs, 700 + words * 420);
+  const start = Date.now();
+  let fired = false;
+  const run = () => { if (!fired) { fired = true; after(); } };
+  const finish = () => setTimeout(run, Math.max(0, minMs - (Date.now() - start)));
+  say(text, finish);
+  setTimeout(run, cap);
+}
+
 export function stopSpeaking() {
+  lastSpoken = {text: '', at: 0};
   if (current) { current.pause(); current = null; }
   try { Speech.stop(); } catch { /* no speech engine */ }
 }

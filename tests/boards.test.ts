@@ -9,7 +9,7 @@ import {buildSentenceRound} from '../src/boards/SentenceStrips';
 import {buildTracePath} from '../src/boards/TraceGlow';
 import {applyScaffold, difficultyConfig} from '../src/games';
 import type {GameId} from '../src/types';
-import {isVoice, rms} from '../src/voice';
+import {isVoice, noiseFloorFrom, rms} from '../src/voice';
 import {rankVoice} from '../src/speech';
 
 const LEVELS = [0, 1, 2, 3];
@@ -134,6 +134,22 @@ describe('voice activity rule (any vocalisation counts)', () => {
     expect(isVoice([0.05, 0.004, 0.07], 0.01)).toBe(false); // a single click is not a voice
     expect(isVoice([0.025, 0.025, 0.025], 0.01)).toBe(false); // below 3x a noisy room
     expect(isVoice([0.03, 0.03], 0.001)).toBe(false); // too short
+  });
+
+  it('measures room noise with the median, so one stray sound cannot deafen the game', () => {
+    const quietRoom = [0.004, 0.005, 0.006, 0.005, 0.004, 0.005];
+    expect(noiseFloorFrom(quietRoom)).toBeCloseTo(0.005, 3);
+
+    // A cough, a chair, or the tail of the app's own voice during calibration.
+    // Taking the maximum used to set the floor here, and since the threshold is
+    // three times the floor, a child could then shout and never be heard.
+    const oneLoudBang = [0.004, 0.005, 0.28, 0.005, 0.004, 0.006];
+    expect(noiseFloorFrom(oneLoudBang)).toBeLessThan(0.01);
+    expect(isVoice([0.05, 0.06, 0.07], noiseFloorFrom(oneLoudBang))).toBe(true);
+
+    // A genuinely loud room is still capped, so the bar stays reachable.
+    const loudRoom = [0.2, 0.22, 0.25, 0.21, 0.24, 0.23];
+    expect(noiseFloorFrom(loudRoom)).toBeLessThanOrEqual(0.03);
     expect(rms([0.5, -0.5, 0.5, -0.5])).toBeCloseTo(0.5);
   });
 });

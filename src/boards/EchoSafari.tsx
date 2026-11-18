@@ -84,8 +84,11 @@ export function EchoSafariBoard({config, seed, width, height, reducedMotion, onI
     let started = false;
     const begin = () => { if (!started) { started = true; listenStart.current = performance.now(); setPhase('listen'); } };
     const sentence = modelSentence(animals, repeats);
-    say(sentence, () => setTimeout(begin, 250));
-    const fallback = setTimeout(begin, 1000 + sentence.split(' ').length * 520);
+    // Listening must not start while the animal is still talking: the detector
+    // spends its first moments measuring room noise, and our own voice through
+    // the speaker would be measured as noise and raise the bar out of reach.
+    say(sentence, () => setTimeout(begin, 400));
+    const fallback = setTimeout(begin, 2500 + sentence.split(' ').length * 620);
     return () => clearTimeout(fallback);
   }, [phase, mode, prompt]);
 
@@ -117,11 +120,14 @@ export function EchoSafariBoard({config, seed, width, height, reducedMotion, onI
       <View style={styles.footer}>
         {phase === 'heard' ? <Text style={styles.status}>⭐ Lovely sound!</Text>
           : phase === 'model' || mode === 'pending' ? <Text style={styles.status}>👂 Listen…</Text>
-          : mode === 'vad' ? <Text testID="echo-listening" style={[styles.status, styles.yourTurn]}>🎤 Your turn!</Text>
           : (
             <View style={styles.observer}>
-              <Text style={[styles.status, styles.yourTurn]}>🎤 Your turn!</Text>
-              <Text style={styles.observerHint}>Grown-up: tap after your child's turn</Text>
+              <Text testID={mode === 'vad' ? 'echo-listening' : undefined} style={[styles.status, styles.yourTurn]}>🎤 Your turn!</Text>
+              <Text style={styles.observerHint}>
+                {mode === 'vad'
+                  ? 'Listening… if it does not hear, tap below'
+                  : "Grown-up: tap after your child's turn"}
+              </Text>
               <View style={styles.observerRow}>
                 <Pressable testID="echo-observer-yes" accessibilityRole="button" accessibilityLabel="My child made a sound" onPress={() => heard()} style={[styles.observerBtn, {backgroundColor: colors.success}]}>
                   <Text style={styles.observerText}>✓ Made a sound</Text>

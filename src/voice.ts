@@ -18,6 +18,27 @@ export function isVoice(recentRms: number[], noiseFloor: number, {minRms = 0.02,
   return recentRms.slice(-minFrames).every(v => v > threshold);
 }
 
+/** ~600 ms of room noise before we start listening for a voice. */
+export const CALIBRATION_FRAMES = 12;
+/** A measured floor above this is almost certainly the app's own audio or a knock,
+ *  not the room, and would push the threshold out of a child's reach. */
+export const MAX_NOISE_FLOOR = 0.03;
+
+/**
+ * Room-noise level from the calibration frames.
+ *
+ * The median, not the maximum: taking the maximum meant a single cough, chair
+ * creak or the tail of the app's own voice set the floor high, and since the
+ * threshold is three times the floor, the child could then shout and never be
+ * heard. That was why Echo Safari so often missed a real answer.
+ */
+export function noiseFloorFrom(samples: number[]): number {
+  if (!samples.length) return 0.005;
+  const sorted = [...samples].sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  return Math.min(MAX_NOISE_FLOOR, Math.max(0.005, median));
+}
+
 export const rms = (samples: ArrayLike<number>) => {
   let sum = 0;
   for (let i = 0; i < samples.length; i++) sum += samples[i] * samples[i];
@@ -44,6 +65,7 @@ export async function createVoiceDetector(): Promise<VoiceDetector | null> {
   return {
     listen(onVoice) {
       const history: number[] = [];
+      const calibration: number[] = [];
       let floor = 0.005;
       let frames = 0;
       let peak = 0;
@@ -51,8 +73,9 @@ export async function createVoiceDetector(): Promise<VoiceDetector | null> {
         analyser.getFloatTimeDomainData(buf);
         const v = rms(buf);
         frames++;
-        peak = Math.max(peak, v);
-        if (frames <= 8) { floor = Math.max(floor, v); return; } // ~400 ms calibration on room noise
+        if (frames <= CALIBRATION_FRAMES) { calibration.push(v); return; }
+        if (frames === CALIBRATION_FRAMES + 1) floor = noiseFloorFrom(calibration);
+        peak = Math.max(peak, v);        // only count peaks after the room has been measured
         history.push(v);
         if (history.length > 10) history.shift();
         if (isVoice(history, floor)) { clearInterval(id); onVoice({peakRms: peak, noiseFloor: floor}); }

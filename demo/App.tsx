@@ -199,12 +199,15 @@ function Help({onRetry, onHome}: {onRetry: () => void; onHome: () => void}) {
   );
 }
 
-type LearnerState = {mastery: Record<string, number>; sessionId: string | null; sessionTrialsObserved: number; consecutiveFailures: number; tasksIssued: number; observationsRecorded: number};
+type TrustRow = {gameId: string; outcome: number | null; reliability: number | null; source: string};
+type AdminSummary = {activities: number; answered: number; safetyInterventions: number; heldSteady: number; downWeighted: number; meanTargetError: number | null};
+type LearnerState = {mastery: Record<string, number>; sessionId: string | null; sessionTrialsObserved: number; consecutiveFailures: number; tasksIssued: number; observationsRecorded: number; recentReliability?: TrustRow[]};
 
 function GrownUps({visible, onClose}: {visible: boolean; onClose: () => void}) {
   const [status, setStatus] = useState<'checking' | 'ok' | 'down' | 'mock'>('checking');
   const [state, setState] = useState<LearnerState | null>(null);
   const [limit, setLimit] = useState<number | null>(null);
+  const [summary, setSummary] = useState<AdminSummary | null>(null);
   useEffect(() => {
     if (!visible) return;
     if (!API_URL) { setStatus('mock'); return; }
@@ -212,6 +215,7 @@ function GrownUps({visible, onClose}: {visible: boolean; onClose: () => void}) {
     fetch(`${API_URL}/health`).then(r => setStatus(r.ok ? 'ok' : 'down')).catch(() => setStatus('down'));
     fetch(`${API_URL}/api/v1/learners/${CHILD_ID}/state`).then(r => (r.ok ? r.json() : null)).then(setState).catch(() => setState(null));
     fetch(`${API_URL}/api/v1/config`).then(r => r.json()).then(c => setLimit(c?.safety?.maxSessionTrials ?? null)).catch(() => setLimit(null));
+    fetch(`${API_URL}/api/v1/learners/${CHILD_ID}/admin`).then(r => (r.ok ? r.json() : null)).then(a => setSummary(a?.summary ?? null)).catch(() => setSummary(null));
   }, [visible]);
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
@@ -232,6 +236,36 @@ function GrownUps({visible, onClose}: {visible: boolean; onClose: () => void}) {
                   </View>
                 ))}
                 <Text style={styles.disclaimer}>These are the app's internal estimates used to choose difficulty. They are not a clinical or developmental assessment.</Text>
+                {summary && summary.activities > 0 ? (
+                  <>
+                    <Text style={styles.panelHeading}>How the app is adapting</Text>
+                    <Row label="Activities chosen for your child" value={`${summary.activities}`} />
+                    <Row label="Kept at the same level on purpose" value={`${summary.heldSteady}`} />
+                    <Row label="Made easier after a tricky run" value={`${summary.safetyInterventions}`} />
+                    <Row label="Answers weighed against the touch data" value={`${summary.downWeighted}`} />
+                    {summary.meanTargetError != null ? (
+                      <Row label="Typical distance from the right challenge" value={`${Math.round(summary.meanTargetError * 100)}%`} />
+                    ) : null}
+                  </>
+                ) : null}
+                {state.recentReliability && state.recentReliability.length > 0 ? (
+                  <>
+                    <Text style={styles.panelHeading}>How much each answer counted</Text>
+                    {state.recentReliability.slice().reverse().map((r, i) => (
+                      <Row
+                        key={i}
+                        label={`${r.gameId} · ${r.outcome === 1 ? 'right' : r.outcome === 0 ? 'wrong' : 'no answer'}`}
+                        value={
+                          r.reliability == null
+                            ? 'counted in full'
+                            : `counted ${Math.round(r.reliability * 100)}%` +
+                              (r.source === 'motor_model' ? ' · looked like a slip' : '')
+                        }
+                      />
+                    ))}
+                    <Text style={styles.disclaimer}>In the three games that need a steady hand, a wrong answer is weighed against how the finger actually moved. An answer that looks like a slip counts for less, so a missed tap is not mistaken for a gap in knowledge.</Text>
+                  </>
+                ) : null}
               </>
             ) : status === 'ok' ? <Text style={styles.subtleLeft}>No activity recorded for this learner yet.</Text> : null}
             <View style={{alignItems: 'flex-end'}}><BigButton small title="Close" onPress={onClose} color={colors.ink} /></View>

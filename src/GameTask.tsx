@@ -4,7 +4,7 @@ import {BOARDS, instructionFor, seedFromString, type AttemptResult} from './boar
 import {DEFAULTS} from './config';
 import {applyScaffold, GAME_NAMES} from './games';
 import {ScaffoldController} from './ScaffoldController';
-import {HINT, NICE_TRY, praise, RETRY, say, stopSpeaking} from './speech';
+import {HINT, NICE_TRY, praise, RETRY, say, sayThen, stopSpeaking} from './speech';
 import {colors, domainColors, fonts, GAME_DOMAIN, GAME_ICON, radius, shadow} from './theme';
 import type {AttemptRecord, GameConfig, GameId, TelemetryEvent} from './types';
 import {Celebration, Mascot, Pulse, SpeakerButton} from './ui/components';
@@ -126,8 +126,7 @@ export function GameTask({gameId, skillId, taskId, taskSeed, difficulty, config,
     if (result.success) {
       const text = praise(index);
       setBanner({kind: 'success', text});
-      say(text);
-      setTimeout(() => emit('success'), 1500);
+      sayThen(text, () => emit('success'), 1500);
     } else if (action.action === 'escalate') {
       setBanner({kind: 'hint', text: HINT});
       say(HINT);
@@ -138,8 +137,8 @@ export function GameTask({gameId, skillId, taskId, taskSeed, difficulty, config,
       setTimeout(() => { setAttempt(a => a + 1); setBanner(null); }, 1300);
     } else {
       setBanner({kind: 'done', text: NICE_TRY});
-      say(NICE_TRY);
-      setTimeout(() => emit('failure'), 1900);
+      // Waits for the line to finish instead of cutting it off on a fixed timer.
+      sayThen(NICE_TRY, () => emit('failure'), 1900);
     }
   };
 
