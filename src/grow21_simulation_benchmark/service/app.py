@@ -69,6 +69,10 @@ def create_app(runtime: Optional[LearnerRuntime] = None, voice: Optional[NeuralV
             raise RuntimeRejection(404, "tts_unavailable", "No neural voice is installed; use the device voice.")
         return Response(content=voice.synthesize(text), media_type="audio/wav", headers={"Cache-Control": "public, max-age=86400"})
 
+    @app.get("/api/v1/learners/{child_id}/admin")
+    def learner_admin(child_id: str) -> Dict[str, Any]:
+        return runtime.admin_view(child_id)
+
     @app.get("/api/v1/learners/{child_id}/state")
     def learner_state(child_id: str) -> Dict[str, Any]:
         return runtime.learner_state(child_id)

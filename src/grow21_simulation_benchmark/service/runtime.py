@@ -32,6 +32,7 @@ import yaml
 from ..closed_loop import RobustAdaptiveFilterController
 from ..paths import DEFAULT_CONFIG_PATH
 from ..tasks import TaskRegistry
+from ..motor_reliability import estimate_reliability
 
 SCHEMA_VERSION = 1
 
@@ -79,6 +80,7 @@ class LearnerState:
     processed_events: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     observations: List[Dict[str, Any]] = field(default_factory=list)
     last_decision: Optional[Dict[str, Any]] = None
+    decisions: List[Dict[str, Any]] = field(default_factory=list)
 
 
 class LearnerRuntime:
@@ -87,8 +89,13 @@ class LearnerRuntime:
         config: Dict[str, Any],
         state_dir: Optional[Path] = None,
         clock: Callable[[], float] = time.time,
+        motor_reliability: bool = False,
     ):
         self.config = config
+        # When on, a failed attempt in a motor game gets a trust weight derived
+        # from its motor telemetry instead of being trusted completely. Off by
+        # default so existing behaviour is unchanged unless it is asked for.
+        self.motor_reliability = motor_reliability
         self.registry = TaskRegistry(config)
         if sorted(FRONTEND_GAME_KEYS.values()) != sorted(self.registry.game_ids):
             raise ValueError("FRONTEND_GAME_KEYS does not cover exactly the configured games")
@@ -113,7 +120,9 @@ class LearnerRuntime:
             # Demo switch: no rest pause after a tricky run. The safety difficulty drop still applies.
             config["controllers"]["target_adaptive"]["cooldown_gap_hours"] = 0.0
         state_dir = os.environ.get("GROW21_STATE_DIR") or None
-        return cls(config, state_dir=Path(state_dir) if state_dir else None)
+        motor_reliability = os.environ.get("GROW21_MOTOR_RELIABILITY") == "1"
+        return cls(config, state_dir=Path(state_dir) if state_dir else None,
+                   motor_reliability=motor_reliability)
 
     # ------------------------------------------------------------------ public API
 
@@ -181,11 +190,25 @@ class LearnerRuntime:
 
             working = copy.deepcopy(learner)
             now = self.clock()
+
+            # The app may send its own reliability. If it does not, and the game
+            # has a motor channel, derive one from the motor telemetry.
+            reliability = event.get("reliability")
+            reliability_source = "client" if reliability is not None else "none"
+            if reliability is None and self.motor_reliability:
+                derived = estimate_reliability(task["gameId"], event.get("motor"), y_obs)
+                if derived is not None:
+                    reliability, reliability_source = derived, "motor_model"
+
+            skill_id = self.registry.games[task["gameId"]].primary_skill
+            mastery_before = float(working.controller.estimated_mastery.get(skill_id, 0.45))
+            predicted = getattr(working.controller, "_last_predicted_clean_prob", None)
             if y_obs is not None:
                 working.controller.observe_outcome(
-                    task["gameId"], y_obs, task["D"], estimated_reliability=event.get("reliability")
+                    task["gameId"], y_obs, task["D"], estimated_reliability=reliability
                 )
                 working.last_observation_at = now
+            mastery_after = float(working.controller.estimated_mastery.get(skill_id, 0.45))
             response = {"ack": True, "duplicate": False, "observationApplied": y_obs is not None}
             working.observed_task_ids.add(task["taskId"])
             working.outstanding = None
@@ -199,7 +222,13 @@ class LearnerRuntime:
                     "difficulty": task["D"],
                     "observedResponse": y_obs,
                     "reason": reason,
-                    "reliability": event.get("reliability"),
+                    "reliability": reliability,
+                    "reliabilitySource": reliability_source,
+                    "skillId": skill_id,
+                    "predictedCleanProb": round(predicted, 4) if predicted is not None else None,
+                    "masteryBefore": round(mastery_before, 4),
+                    "masteryAfter": round(mastery_after, 4),
+                    "masteryDelta": round(mastery_after - mastery_before, 5),
                     "receivedAt": now,
                     "clientTimestamp": event["timestampIso"],
                 }
@@ -226,8 +255,91 @@ class LearnerRuntime:
                 "consecutiveFailures": int(ctrl.consecutive_failures),
                 "tasksIssued": learner.tasks_issued,
                 "observationsRecorded": len(learner.observations),
+                # Recent trust weights, so a grown-up can see when the engine
+                # decided a wrong answer looked like a slip rather than a gap
+                # in knowledge. Empty until a motor game has been played.
+                "recentReliability": [
+                    {
+                        "gameId": self.game_keys.get(o["gameId"], o["gameId"]),
+                        "outcome": o["observedResponse"],
+                        "reliability": o.get("reliability"),
+                        "source": o.get("reliabilitySource", "none"),
+                    }
+                    for o in learner.observations[-6:]
+                ],
                 "outstandingTaskId": learner.outstanding["taskId"] if learner.outstanding else None,
                 "lastDecision": learner.last_decision,
+            }
+
+    def admin_view(self, child_id: str) -> Dict[str, Any]:
+        """Everything the engine decided and why, for the activities played so far.
+
+        Nothing here is computed for display: these are the same numbers the
+        controller used at the time. The point of the page is that the adaptation
+        is invisible while a child plays, so it has to be shown somewhere.
+        """
+        with self._lock:
+            learner = self._load(child_id)
+            if learner is None:
+                raise RuntimeRejection(404, "unknown_learner", "Unknown learner.")
+            ctrl = learner.controller
+
+            by_task = {o["taskId"]: o for o in learner.observations}
+            timeline = []
+            for d in learner.decisions:
+                o = by_task.get(d["taskId"])
+                timeline.append({
+                    "taskId": d["taskId"],
+                    "gameId": d["gameId"],
+                    "chosenDifficulty": d.get("applied_difficulty"),
+                    "targetDifficulty": d.get("target_difficulty_solved"),
+                    "predictedSuccess": d.get("predicted_clean_prob"),
+                    "targetSuccess": d.get("target_prob"),
+                    "targetError": d.get("target_error"),
+                    "rule": d.get("determination_rule"),
+                    "safetyIntervention": bool(d.get("safety_intervention")),
+                    "heldInDeadband": bool(d.get("deadband_held")),
+                    "stepLimited": bool(d.get("step_limited")),
+                    "atFloor": bool(d.get("at_min")),
+                    "atCeiling": bool(d.get("at_max")),
+                    "reachable": d.get("target_reachable"),
+                    "reachability": d.get("reachability_status"),
+                    "outcome": (o or {}).get("observedResponse"),
+                    "skillId": (o or {}).get("skillId"),
+                    "reliability": (o or {}).get("reliability"),
+                    "reliabilitySource": (o or {}).get("reliabilitySource", "none"),
+                    "masteryBefore": (o or {}).get("masteryBefore"),
+                    "masteryAfter": (o or {}).get("masteryAfter"),
+                    "masteryDelta": (o or {}).get("masteryDelta"),
+                    "answered": o is not None,
+                })
+
+            graded = [t for t in timeline if t["answered"]]
+            weighted = [t for t in graded if t["reliability"] is not None]
+            return {
+                "schemaVersion": SCHEMA_VERSION,
+                "childId": learner.learner_id,
+                "estimator": "robust_adaptive_filter",
+                "motorReliabilityEnabled": self.motor_reliability,
+                "mastery": {s: round(float(v), 4) for s, v in ctrl.estimated_mastery.items()},
+                "gameDifficulty": {
+                    self.game_keys[g]: round(float(v), 4) for g, v in learner.game_difficulty.items()
+                },
+                "sessionTrialsObserved": int(ctrl.session_trial_count),
+                "consecutiveFailures": int(ctrl.consecutive_failures),
+                "tasksIssued": learner.tasks_issued,
+                "summary": {
+                    "activities": len(timeline),
+                    "answered": len(graded),
+                    "safetyInterventions": sum(1 for t in timeline if t["safetyIntervention"]),
+                    "heldSteady": sum(1 for t in timeline if t["heldInDeadband"]),
+                    "downWeighted": len(weighted),
+                    "meanTargetError": (
+                        round(sum(t["targetError"] or 0 for t in timeline) / len(timeline), 4)
+                        if timeline else None
+                    ),
+                },
+                "timeline": timeline,
             }
 
     # ------------------------------------------------------------------ internals
@@ -307,6 +419,8 @@ class LearnerRuntime:
             "elapsedHours": round(elapsed_hours, 6),
             **ctrl.last_diagnostic,
         }
+        learner.decisions.append(learner.last_decision)
+        del learner.decisions[:-60]      # a demo only needs recent history
         return self._task_directive(learner.outstanding)
 
     def _enter_session(self, learner: LearnerState, session_id: str) -> None:
